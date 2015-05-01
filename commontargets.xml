@@ -44,28 +44,13 @@
         </propertyfile>
     </target>
 
-    <target name="getNonReleaseLSID" unless="releasingModule">
+    <target name="getLSID">
         <property file="${lsid.registry.name}" />
         <property name="LSID.key" value="${ant.project.name}.lsid" />
         <propertycopy name="LSID.noVersion" from="${LSID.key}" />
-        <!-- for a non-release build don't read the version number,
-    but set it to 999999999 -->
-        <property file="release.version" />
         <condition value="${LSID.noVersion}:${version}" property="LSID" else="${LSID.noVersion}:${test.version}">
             <isset property="version" />
         </condition>
-        <echo>${LSID.key} = ${LSID}</echo>
-    </target>
-
-    <target name="getLSID" depends="getNonReleaseLSID" if="releasingModule">
-        <property file="${lsid.registry.name}" />
-        <property name="LSID.key" value="${ant.project.name}.lsid" />
-        <propertycopy name="LSID.noVersion" from="${LSID.key}" />
-        <!-- read the version number, this is the next (unreleased) number
-        in most cases unless the buildnumber task has been called in the
-        release target -->
-        <property name="LSID" value="${LSID.noVersion}:${build.number}" />
-        <propertyregex property="moduleId" input="${LSID.noVersion}" regexp="urn:lsid:([^\:]*):([^\:]*):([^\:]*)" select="\3" casesensitive="false" />
         <echo>${LSID.key} = ${LSID}</echo>
     </target>
 
