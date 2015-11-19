@@ -387,6 +387,7 @@ InstallRPackages.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.
 InstallRPackages_R3.0.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00352
 InstallRPackages_R3.1.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00353
 MergeHTSeqCounts.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00354
+PreprocessReadCounts.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00355
 
 ################################
 # PathSeq Pipeline
