@@ -383,11 +383,12 @@ Bowtie1.indexer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.a
 Bowtie1.aligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00348
 Cuffquant.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00349
 Cuffnorm.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00350
-InstallRPackages.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00351
+InstallRPackages_R2.15.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00351
 InstallRPackages_R3.0.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00352
 InstallRPackages_R3.1.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00353
 MergeHTSeqCounts.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00354
 PreprocessReadCounts.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00355
+InstallRPackages_R3.2.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00356
 
 ################################
 # PathSeq Pipeline
