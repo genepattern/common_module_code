@@ -502,3 +502,5 @@ TestStep.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.test.ana
 TestFileGroup.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.test.analysis:00009
 TestPassByReference.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.test.analysis:00010
 
+# GPBROAD dev modules
+HTSeq.Count.lsid=urn:lsid:8080.gpbroad.broadinstitute.org:genepatternmodules:498
