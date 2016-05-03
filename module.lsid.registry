@@ -392,6 +392,7 @@ InstallRPackages_R3.2.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.mo
 GSEACollapseDataset.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00357
 GSEALeadingEdgeReport.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00358
 RTutorialModule.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00359
+REVEALER.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00360
 
 ################################
 # PathSeq Pipeline
