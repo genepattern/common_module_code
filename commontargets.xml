@@ -1,15 +1,15 @@
 <project name="common">
     <property name="user" value="${user.name}"/>
     <property  name="lsid.registry.name" value="${dirOffset}/module.lsid.registry"/>
-	<condition property="dirOffset" else=".">
-		<isset property="dirOffset" />
-	</condition>
+    <condition property="dirOffset" else=".">
+        <isset property="dirOffset" />
+    </condition>
 
     <taskdef resource="net/sf/antcontrib/antlib.xml">
-		<classpath>
-			<fileset dir="${dirOffset}/lib" includes="*.jar" />
-		</classpath>
-	</taskdef>
+        <classpath>
+            <fileset dir="${dirOffset}/lib" includes="*.jar" />
+        </classpath>
+    </taskdef>
 
     <!-- 
        Work around the "includeantruntime" warning introduced in Ant 1.8.
@@ -20,15 +20,15 @@
     </presetdef>
   
     <target name="init">
-		<tstamp />
+        <tstamp />
         <property name="test.version" value="999999999"/>
-		<property name="dest.dir" value="build" />
-	</target>
+        <property name="dest.dir" value="build" />
+    </target>
 
 
-	<target name="prezip" depends="addLSIDtoManifest">
-		<tstamp />
-	    <echo  message="user is ${user}"/>
+    <target name="prezip" depends="addLSIDtoManifest">
+        <tstamp />
+        <echo  message="user is ${user}"/>
     </target>
 
     <target name="addLSIDtoManifest" depends="getLSID">
@@ -58,12 +58,12 @@
         <move file="manifest.tmp" tofile="manifest" preservelastmodified="true" overwrite="true" failonerror="true" />
     </target>
 
-	<target name="postzip" depends="resetManifest">
-		<property file="${lsid.registry.name}" />
-		<property name="LSID.key" value="${ant.project.name}.lsid" />
-		<propertycopy name="LSID.noVersion" from="${LSID.key}" />
-		<propertyregex property="moduleId" input="${LSID.noVersion}" regexp="urn:lsid:([^\:]*):([^\:]*):([^\:]*)" select="\3" casesensitive="false" />
-		<property file="manifest" />
-	</target>
+    <target name="postzip" depends="resetManifest">
+        <property file="${lsid.registry.name}" />
+        <property name="LSID.key" value="${ant.project.name}.lsid" />
+        <propertycopy name="LSID.noVersion" from="${LSID.key}" />
+        <propertyregex property="moduleId" input="${LSID.noVersion}" regexp="urn:lsid:([^\:]*):([^\:]*):([^\:]*)" select="\3" casesensitive="false" />
+        <property file="manifest" />
+    </target>
 
 </project>
