@@ -509,3 +509,4 @@ TestPassByReference.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.modu
 
 # GPBROAD dev modules
 HTSeq.Count.lsid=urn:lsid:8080.gpbroad.broadinstitute.org:genepatternmodules:498
+DESeq2.Demo.lsid=urn:lsid:8080.gpbroad.broadinstitute.org:genepatternmodules:571
