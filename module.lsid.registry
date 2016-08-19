@@ -394,6 +394,7 @@ GSEALeadingEdgeReport.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.mo
 RTutorialModule.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00359
 REVEALER.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00360
 Chip2Chip.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00361
+DESeq2.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00362
 
 ################################
 # PathSeq Pipeline
