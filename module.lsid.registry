@@ -395,6 +395,7 @@ RTutorialModule.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.a
 REVEALER.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00360
 Chip2Chip.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00361
 DESeq2.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00362
+IGV.js.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00363
 
 ################################
 # PathSeq Pipeline
