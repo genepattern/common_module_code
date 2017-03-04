@@ -397,6 +397,11 @@ Chip2Chip.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysi
 DESeq2.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00362
 IGV.js.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00363
 
+########################################
+# STAR aligner modules
+########################################
+STAR.aligner.lsid=urn:lsid:org.genepattern:module.star:00010
+
 ################################
 # PathSeq Pipeline
 BlastXml.lsid=urn:lsid:pathseq.broadinstitute.org:pathseq.analysis:02001
