@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." name="build.debug" default="debug"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless"
+    xmlns:rsel="antlib:org.apache.tools.ant.types.resources.selectors"
+    xmlns:rcmp="antlib:org.apache.tools.ant.types.resources.comparators"
+>
+
+    <target name="debug" depends="debug-defaultexcludes, debug-if-set" />
+
+    <target name="debug-defaultexcludes"
+        description="debug ant 'defaultexcludes' task"
+    >
+        <defaultexcludes add="build.xml" />
+        <defaultexcludes add="release.version" />
+        <defaultexcludes add="prerelease.version" />
+        <defaultexcludes add="archive/**" />
+        <defaultexcludes echo="true" />
+    </target>
+
+    <target name="debug-if-set" 
+        description="debug ant if and unless attributes, 'if:set', (requires ant 1.9.1+)" 
+    >
+        <property name="exec-files" value="bin/myapp" />
+        <condition property="has.exec-files" value="true">
+            <and>
+                <isset property="exec-files" />
+                <length string="${exec-files}" when="greater" length="0" />
+            </and>
+        </condition>
+
+        <echo message="testing exec-files conditions ..." />
+        <echo>    exec-files='${exec-files}'</echo>
+        <echo     if:set = "exec-files"    >if:set       (name) is set</echo>
+        <echo unless:set = "exec-files"    >unless:set   (name) is not set</echo>
+        <echo     if:true ="exec-files"    >if:true      (name) is true</echo>
+        <echo unless:true ="exec-files"    >unless:true  (name) is not true</echo>
+        <echo     if:blank="exec-files"    >if:blank     (name) is blank</echo>
+        <echo unless:blank="exec-files"    >unless:blank (name) is not blank</echo>
+        <echo     if:set = "${exec-files}" >if:set       (value) is set</echo>
+        <echo unless:set = "${exec-files}" >unless:set   (value) is not set</echo>
+        <echo     if:true ="${exec-files}" >if:true      (value) is true</echo>
+        <echo unless:true ="${exec-files}" >unless:true  (value) is not true</echo>
+        <echo     if:blank="${exec-files}" >if:blank     (value) is blank</echo>
+        <echo unless:blank="${exec-files}" >unless:blank (value) is not blank</echo>
+
+<!-- is property.name set and property.value not blank -->
+        <echo>has.exec-files: ${has.exec-files}</echo>
+        <echo     if:true = "${has.exec-files}">has.exec-files is true</echo>
+        <echo unless:true = "${has.exec-files}">has.exec-files is false</echo>
+ 
+        <echo>Case 1: property not set (by value)</echo>
+        <echo     if:true  ="${prop-not-set}"  >        if:true </echo>
+        <echo unless:true  ="${prop-not-set}"  >    unless:true </echo>
+        <echo     if:set   ="${prop-not-set}"  >        if:set </echo>
+        <echo unless:set   ="${prop-not-set}"  >    unless:set </echo>
+        <echo     if:blank ="${prop-not-set}"  >        if:blank </echo>
+        <echo unless:blank ="${prop-not-set}"  >    unless:blank </echo>
+        <echo>Case 2: property is blank (by value)</echo>
+        <property name="prop-is-blank" value="" />
+        <echo     if:true  ="${prop-is-blank}" >        if:true </echo>
+        <echo unless:true  ="${prop-is-blank}" >    unless:true </echo>
+        <echo     if:set   ="${prop-is-blank}" >        if:set </echo>
+        <echo unless:set   ="${prop-is-blank}" >    unless:set </echo>
+        <echo     if:blank ="${prop-is-blank}" >        if:blank </echo>
+        <echo unless:blank ="${prop-is-blank}" >    unless:blank </echo>
+        <echo>Case 3: property is set (by value)</echo>
+        <property name="prop-is-set" value="bin/myapp" />
+        <echo     if:true  ="${prop-is-set}"   >        if:true </echo>
+        <echo unless:true  ="${prop-is-set}"   >    unless:true </echo>
+        <echo     if:set   ="${prop-is-set}"   >        if:set </echo>
+        <echo unless:set   ="${prop-is-set}"   >    unless:set </echo>
+        <echo     if:blank ="${prop-is-set}"   >        if:blank </echo>
+        <echo unless:blank ="${prop-is-set}"   >    unless:blank </echo>
+
+        <echo>Case 4: property not set (by name)</echo>
+        <echo     if:true  ="prop-not-set"  >        if:true </echo>
+        <echo unless:true  ="prop-not-set"  >    unless:true </echo>
+        <echo     if:set   ="prop-not-set"  >        if:set </echo>
+        <echo unless:set   ="prop-not-set"  >    unless:set </echo>
+        <echo     if:blank ="prop-not-set"  >        if:blank </echo>
+        <echo unless:blank ="prop-not-set"  >    unless:blank </echo>
+        <echo>Case 5: property is blank (by name)</echo>
+        <property name="prop-is-blank" value="" />
+        <echo     if:true  ="prop-is-blank" >        if:true </echo>
+        <echo unless:true  ="prop-is-blank" >    unless:true </echo>
+        <echo     if:set   ="prop-is-blank" >        if:set </echo>
+        <echo unless:set   ="prop-is-blank" >    unless:set </echo>
+        <echo     if:blank ="prop-is-blank" >        if:blank </echo>
+        <echo unless:blank ="prop-is-blank" >    unless:blank </echo>
+        <echo>Case 6: property is set (by name)</echo>
+        <property name="prop-is-set" value="bin/myapp" />
+        <echo     if:true  ="prop-is-set"   >        if:true </echo>
+        <echo unless:true  ="prop-is-set"   >    unless:true </echo>
+        <echo     if:set   ="prop-is-set"   >        if:set </echo>
+        <echo unless:set   ="prop-is-set"   >    unless:set </echo>
+        <echo     if:blank ="prop-is-set"   >        if:blank </echo>
+        <echo unless:blank ="prop-is-set"   >    unless:blank </echo>
+
+    </target>
+
+</project>

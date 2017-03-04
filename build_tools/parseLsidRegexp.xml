@@ -1,0 +1,92 @@
+    <!-- 
+      Define 'parseLsidRegexp' as an alternative implementation using regular expressions.
+      The macrodef is included in a target so that 'antcontrib' can be declared as a dependency.
+      Requirements:
+          Ant-Contrib Tasks, needed for the propertyregex task 
+
+      Note: This uses the java.util.regex.Pattern class for evaluating regular expressions.
+          http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
+
+      Option 1, requires {lsid.version}
+          urn:lsid:([^\:]*):([^\:]*):([^\:]*):([^\:]*)
+      Option 2, handles missing {lsid.version}
+          urn:lsid:([^\:]*):([^\:]*):([^\:]*)(:([^\:]*)|)
+    -->
+    <target name="require-propertyregex" depends="require-antcontrib" />
+    <target name="define-parseLsidRegexp" depends="require-propertyregex">
+
+        <macrodef name="setLsidNoVersion">
+            <attribute name="prefix" />
+            <sequential>
+                <property name="@{prefix}lsid.no_version" 
+                    value="urn:lsid:${@{prefix}lsid.authority}:${@{prefix}lsid.namespace}:${@{prefix}lsid.identifier}" />
+            </sequential>
+        </macrodef>
+
+        <macrodef name="parseLsidRegexp">
+            <attribute name="lsid" description="the lsid" />
+            <attribute name="prefix" default="" 
+                description="prefix to prepend to the lsid.* property names; similar to 'prefix' attribute of the property task" 
+            />
+            <attribute name="verbose" default="false" />
+
+            <sequential>
+                <!-- if necessary, append '.' to prefix -->
+                <local name="lsid.prefix" />
+                <propertyregex property="lsid.prefix" 
+                    input="@{prefix}" 
+                    regexp="^(.+?)(\.?$)"
+                    select="\1."
+                    defaultValue="@{prefix}" />
+                <echo if:true="@{verbose}">     prefix='@{prefix}'</echo>
+                <echo if:true="@{verbose}">lsid.prefix='${lsid.prefix}'</echo>
+
+                <local name="lsid.regexp" />
+                <property name="lsid.regexp" 
+                    value="urn:lsid:([^\:]*):([^\:]*):([^\:]*)(:([^\:]*)|)" 
+                />
+
+                <propertyregex property="${lsid.prefix}lsid.authority" 
+                    input="@{lsid}" regexp="${lsid.regexp}" casesensitive="false"
+                    replace="\1" />
+
+                <propertyregex property="${lsid.prefix}lsid.namespace" 
+                    input="@{lsid}" regexp="${lsid.regexp}" casesensitive="false"
+                    replace="\2" />
+
+                <propertyregex property="${lsid.prefix}lsid.identifier" 
+                    input="@{lsid}" regexp="${lsid.regexp}" casesensitive="false"
+                    replace="\3" />
+
+                <!-- Note: \4 vs \5 -->
+                <propertyregex property="${lsid.prefix}lsid.version" 
+                    input="@{lsid}" regexp="${lsid.regexp}" casesensitive="false"
+                    replace="\5"
+                    defaultValue=""
+                />
+
+                <!-- requires macrodef to handle variable property name, e.g. this won't work:
+                     property 
+                         name="${${lsid.prefix}lsid.no_version}" 
+                         value="${${lsid.prefix}lsid.authority} ..."
+                -->
+                <setLsidNoVersion prefix="${lsid.prefix}" />
+
+                <echo-lsid prefix="${lsid.prefix}" if:true="@{verbose}" />
+            </sequential>
+        </macrodef>
+    </target>
+
+    <target name="test-parseLsidRegexp" depends="define-parseLsidRegexp, set-properties-from-manifest"
+        description="for testing the parseLsidRegexp macrodef"
+    >
+        <property name="example-baselsid" value="urn:lsid:org.genepattern:module.example:00002" />
+
+        <parseLsidRegexp lsid="${manifest.LSID}" prefix="manifest" verbose="true" />
+        <parseLsidRegexp lsid="${example-baselsid}:0.1" verbose="true" />
+        <parseLsidRegexp lsid="${example-baselsid}:0.1" prefix="test" verbose="true" />
+        <parseLsidRegexp lsid="${example-baselsid}" prefix="test.no_version" verbose="true" />
+
+        <parseLsidRegexp lsid="${example-baselsid}:0.1" prefix="test.no_trailing" verbose="true" />
+        <parseLsidRegexp lsid="${example-baselsid}:0.1" prefix="test.trailing." verbose="true" />
+    </target>

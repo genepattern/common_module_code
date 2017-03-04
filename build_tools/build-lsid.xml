@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project [
+    <!ENTITY parseLsidRegexp SYSTEM "parseLsidRegexp.xml">
+]>
+
+<project basedir="." name="gp.build-lsid"
+    xmlns:rsel="antlib:org.apache.tools.ant.types.resources.selectors"
+    xmlns:rcmp="antlib:org.apache.tools.ant.types.resources.comparators"
+    xmlns:props="antlib:org.apache.ant.props"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless"
+>
+
+    <!--
+      ===================================================================
+             Module Release Tasks
+      ===================================================================
+         create-module-zip - Package module for installation on a GP server
+
+            ./dist/{module.name}_v{module.version}.zip
+
+            Requirements:
+            module.name
+            module.lsid.no_version
+            module.lsid.version
+
+         variations:
+             as-new-999-version
+
+    -->
+
+
+    <!--
+      ===================================================================
+          Package module for release
+      ===================================================================
+      Create the module.zip file for upload to a GP server or a module
+      repository.
+    -->
+    <property name="dist.dir" value="target" />
+    <target name="mk-dist-dir">
+        <mkdir dir="${dist.dir}" />
+    </target>
+
+    <target name="init-zip-filename" depends="init-module-version">
+        <property name="module.name" value="${ant.project.name}" />
+        <property name="zip.filename" value="${module.name}_v${module.version}${build.metadata}.zip" />
+    </target>
+
+    <target name="package-module" depends="mk-dist-dir, init-zip-filename"
+        description="Create the module ${zip.filename}"
+    >
+        <patternset id="module.files" excludes="${exec-files}" >
+            <patternset refid="module.excludes" />
+        </patternset>
+        <patternset id="module.files.exec" includes="${exec-files}" >
+            <patternset refid="module.excludes" />
+        </patternset>
+
+        <!--
+            Create the module.zip file.
+
+            Optionally, set the exec flag (filemode=755) for each item in the 
+            'exec-files' list.
+        -->
+        <!-- fail if dist.dir does not exist -->
+        <fail message="Missing required directory, dist.dir='${dist.dir}'">
+            <condition><not><available file="${dist.dir}" type="dir"/></not></condition>
+        </fail>
+        <!-- fail if zip.filename not set -->
+        <fail message="Missing required property, 'zip.filename' not set" unless:set="zip.filename" />
+
+        <zip destfile="${dist.dir}/${zip.filename}" whenempty="fail" defaultexcludes="true">
+            <zipfileset dir="${basedir}" filemode="644">
+                <patternset refid="module.files" />
+            </zipfileset>
+
+            <zipfileset dir="${basedir}" filemode="755" if:true="${has.exec-files}" >
+                <patternset refid="module.files.exec" />
+            </zipfileset>
+        </zip>
+    </target>
+
+
+    <!--
+      ===================================================================
+          Module Version
+      ===================================================================
+
+
+      module.version = manifest.lsid.version | 999 version | nextMajor | nextMinor | nextPatch
+      By default, pull the version from the manifest file
+
+      Semantic Versioning (see: http://semver.org)
+          Major.Minor.Patch-PrereleaseVersion+BuildMetaData
+
+      sem.version=${manifest.lsid.version}\
+          ${prerelease.version}\
+          ${build.metadata}
+
+      prerelease.version=[-local.prerelease]
+      build.metadata=[+local.buildnum]
+
+
+      Task: set-next-version, options include,
+          * as nextVersion, matches module integrator behavior
+          * as nextMajorVersion
+          * as nextMinorVersion
+          * as nextPatchVersion
+
+          Makes an edit to the manifest file
+    -->
+    <target name="set-next-version" depends="init-module-version"
+        description="Set the next version, update the LSID in the manifest file"
+    >
+
+        <propertyfile file="manifest">
+            <entry key="LSID" type="string" value="" />
+            <entry key="product.build.major"   type="int"  value="=" />
+            <entry key="product.build.minor"   type="int"  operation="+" value="1" />
+            <entry key="product.build.patch"   type="int"  value="0" />
+            <entry key="product.build.date"    type="date" value="now" />
+        </propertyfile>
+
+    </target>
+
+
+    <!--
+        build.version
+    -->
+    <target name="nextMinorVersion"
+        description="Increment minor version"
+    >
+        <property name="header" value="##Generated file - do not modify!" />
+        <propertyfile file="version.properties" comment="${header}">
+            <entry key="product.build.major"   type="int"  value="=" />
+            <entry key="product.build.minor"   type="int"  operation="+" value="1" />
+            <entry key="product.build.patch"   type="int"  value="0" />
+            <entry key="product.build.date"    type="date" value="now" />
+        </propertyfile>
+    </target>
+
+    <!-- set the 'module.version' property from the LSID in the manifest file -->
+    <target name="init-module-version" depends="init-lsid-from-manifest">
+        <property name="module.version" value="${manifest.lsid.version}" />
+
+        <!-- set the build.number property, creates a buildnumber.properties file if it doesn't already exist -->
+        <buildnumber file="buildnumber.properties" />
+        <property name="build.metadata" value="+build.${build.number}" />
+    </target>
+
+    <!-- 
+      - set the 'next.module.version' property from the LSID in the manifest file
+      - and the 'version.increment' property
+      -     next
+      -     next-major
+      -     next-minor
+      -     next-patch
+      -     dev-999
+      -     no-change
+    -->
+    <target name="init-next-module-version" depends="init-lsid-from-manifest">
+        <antcall target="reset-build-number" />
+
+        <property name="version.increment" value="next-patch" />
+        <switch value="${version.increment}">
+            <case value="next">
+                <property name="next.module.version" value="${}" />
+            </case>
+            <case value="next-major">
+            </case>
+            <case value="next-minor"></case>
+            <case value="next-patch"></case>
+            <case value="max-version"></case>
+            <case value="none"></case>
+        </switch>
+
+    </target>
+
+
+    <target name="reset-build-number">
+        <delete file="${buildnumber.properties}" />
+    </target>
+
+    <target name="set-properties-from-manifest" 
+        description="Read properties from the manifest file"
+    >
+        <property file="manifest" prefix="manifest" />
+    </target>
+
+    <target name="init-lsid-from-manifest" depends="set-properties-from-manifest"
+        description="Read the lsid from the manifest file"
+    >
+        <parseLsid lsid="${manifest.LSID}" prefix="manifest" />
+    </target>
+
+    <target name="show-lsid-from-manifest" depends="init-lsid-from-manifest"
+        description="Show lsid version from manifest file"
+    >
+        <echo>manifest.LSID=${manifest.LSID}</echo>
+        <echo>manifest.lsid.no_version=${manifest.lsid.no_version}</echo>
+        <echo>manifest.lsid.version=${manifest.lsid.version}</echo>
+    </target>
+
+    <!--
+      ===================================================================
+          Lsid Utilities
+      ===================================================================
+         Helper methods for setting the lsid in the manifest file.
+
+         Lsid Template:
+             urn:lsid:{authority}:{namespace}:{authority}:{identifier}:{version}
+
+         use-cases:
+
+         1) Extract lsid from existing manifest file ...
+             a) ... create new patch version
+             b) ... create new minor version 
+             c) ... create new major version
+             d) ... create new '999*' version
+
+         2) Save lsid into manifest file
+
+         special-cases:
+             a) init base LSID from external variable, e.g.
+             ant -D 
+
+    -->
+
+    <!--
+      ===================================================================
+          parseLsid macrodef
+      ===================================================================
+      Usage:
+          <parseLsid 
+              lsid=${lsid}, with or without the trailing version number
+              prefix=${prefix},  optional, to append to the ant property name
+              verbose=true|false, optional default="false", for verbose output
+          /> 
+
+      Result: Sets the following ant properties
+          ${prefix}.lsid.authority
+          ${prefix}.lsid.namespace
+          ${prefix}.lsid.identifier
+          ${prefix}.lsid.version
+          ${prefix}.lsid.no_version, the full lsid minus the version
+          ${prefix}.lsid.version.major, the current major version from the manifest
+          ${prefix}.lsid.version.minor, the current minor version from the manifest
+          ${prefix}.lsid.version.patch, the current patch version from the manifest
+
+      Sets additional properties for incrementing the version number.
+          ${prefix}.lsid.next_version, the next version, based on the current patch-level
+          ${prefix}.lsid.next_major,   the next major version, e.g. 1->2; 1.2->2 
+          ${prefix}.lsid.next_minor,   the next minor version, e.g. 1->1.1; 1.2->1.3; 1.2.1->1.3
+          ${prefix}.lsid.next_patch,   the next patch version, e.g. 1->1.0.1; 1.2->1.2.1; 1.2.1->1.2.2
+
+      Example:
+           <parseLsid lsid="urn:lsid:org.genepattern:module.demo:00002:0.1" prefix="test" />
+           test.lsid.authority  = org.genepattern
+           test.lsid.namespace  = module.my_module
+           test.lsid.identifier = 00002
+           test.lsid.version    = 0.1
+           test.lsid.no_version = urn:lsid:org.genepattern:module.my_module:00002
+ -->
+    <macrodef name="parseLsid"
+        description="Set lsid properties of the form '@{prefix}.lsid.[authority | namespace | identifier | version | no_version]'"
+    >
+        <attribute name="lsid" description="the lsid" />
+        <attribute name="prefix" default="" 
+            description="prefix to prepend to the lsid.* property names; similar to 'prefix' attribute of the property task" 
+        />
+        <attribute name="verbose" default="false" />
+
+        <sequential>
+            <echo if:true="@{verbose}">parseLsid, lsid=@{lsid}</echo>
+
+            <local name="_lsid_in" />
+            <property name="_lsid_in" value="@{lsid}" />
+            <local name="_prefix_in" />
+            <property name="_prefix_in" value="@{prefix}" />
+            <script language="javascript" setbeans="false">
+                lsid_tokens = project.getProperty('_lsid_in').split(':');
+                prefix = project.getProperty('_prefix_in');
+                if (!prefix) { 
+                    prefix='';
+                }
+                else if (!prefix.endsWith('.')) {
+                    prefix = prefix + '.';
+                }
+                lsid_version='';
+                if (lsid_tokens.length > 2) {
+                    project.setProperty(prefix+'lsid.authority',  lsid_tokens[2]);
+                }
+                if (lsid_tokens.length > 3) {
+                    project.setProperty(prefix+'lsid.namespace',  lsid_tokens[3]);
+                }
+                if (lsid_tokens.length > 4) {
+                    project.setProperty(prefix+'lsid.identifier', lsid_tokens[4]);
+                    project.setProperty(prefix+'lsid.no_version', lsid_tokens.slice(0,5).join(':'));
+                }
+                if (lsid_tokens.length > 5) {
+                    lsid_version=lsid_tokens[5];
+                    project.setProperty(prefix+'lsid.version',    lsid_tokens[5]);
+                }
+                else {
+                    // lsid.version not set
+                    project.setProperty(prefix+'lsid.version',    '');
+                }
+
+                if (lsid_version) {
+                    lsid_version_tokens = lsid_version.split('.');
+                    var X = 0;
+                    var Y = 0;
+                    var Z = 0;
+                    var nextVersion = "";
+                    var nextMajor = "";
+                    var nextMinor = "";
+                    var nextPatch = "";
+                    if (lsid_version_tokens.length > 0) {
+                        X = Number(lsid_version_tokens[0]);
+                        project.setProperty(prefix+'lsid.version.major', X);
+                        nextVersion = "" + (X+1);
+                        nextMajor = "" + (X+1);
+                        nextMinor = "" + X + ".1";
+                        nextPatch = "" + X + "." + "0" + "." + "1";
+                    }
+                    if (lsid_version_tokens.length > 1) {
+                        Y = Number(lsid_version_tokens[1]);
+                        project.setProperty(prefix+'lsid.version.minor', Y);
+                        nextVersion = "" + X + "." + (Y+1);
+                        nextMinor = "" + X + "." + (Y+1);
+                        nextPatch = "" + X + "." + Y + ".1";
+                    }
+                    if (lsid_version_tokens.length > 2) {
+                        Z = Number(lsid_version_tokens[2]);
+                        project.setProperty(prefix+'lsid.version.patch', Z);
+                        nextVersion = "" + X + "." + Y + "." + (Z+1);
+                        nextPatch = "" + X + "." + Y + "." + (Z+1);
+                    }
+
+                    project.setProperty(prefix+'lsid.next_version', nextVersion);
+                    project.setProperty(prefix+'lsid.next_major', nextMajor);
+                    project.setProperty(prefix+'lsid.next_minor', nextMinor);
+                    project.setProperty(prefix+'lsid.next_patch', nextPatch);
+                }
+            </script>
+
+            <echo-lsid prefix="@{prefix}" if:true="@{verbose}" />
+        </sequential>
+    </macrodef>
+
+    <!--
+      The 'echo-property' macrodef is a workaround to handle variable property names,
+      This won't work in a target,
+           <echo>${${prefix}lsid.authority}</echo>
+      This alternative will work inside a macrodef
+           <echo>${@{prefix}lsid.authority}</echo>
+    -->
+    <macrodef name="echo-property">
+        <attribute name="prefix" default="" />
+        <attribute name="pname" />
+        <attribute name="pad" default="" />
+        <attribute name="empty-val" default="" />
+        <attribute name="verbose" default="false" />
+        <sequential>
+            <local name="pname.set" />
+            <condition property="pname.set" else="false">
+                <isset property="@{prefix}@{pname}" />
+            </condition>
+            <echo if:true="${verbose}">pname.set: ${pname.set}</echo>
+
+            <echo     if:true="${pname.set}">  @{prefix}@{pname} @{pad} => ${@{prefix}@{pname}}</echo>
+            <echo unless:true="${pname.set}">  @{prefix}@{pname} @{pad} => @{empty-val} </echo>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="echo-lsid">
+        <attribute name="prefix" default="" />
+        <sequential>
+            <!-- if necessary, append '.' to prefix -->
+            <local name="prefix" />
+            <condition property="prefix" value="@{prefix}." else="@{prefix}" >
+                <length string="@{prefix}" when="greater" length="0" />
+            </condition>
+
+            <echo-property prefix="${prefix}" pname="lsid.authority" pad="    " />
+            <echo-property prefix="${prefix}" pname="lsid.namespace" pad="    " />
+            <echo-property prefix="${prefix}" pname="lsid.identifier" pad="   " />
+            <echo-property prefix="${prefix}" pname="lsid.version" pad="      " />
+            <echo-property prefix="${prefix}" pname="lsid.version.major" pad="" />
+            <echo-property prefix="${prefix}" pname="lsid.version.minor" pad="" />
+            <echo-property prefix="${prefix}" pname="lsid.version.patch" pad="" />
+            <echo-property prefix="${prefix}" pname="lsid.no_version" pad="   " />
+            <echo-property prefix="${prefix}" pname="lsid.next_version" pad=" " />
+            <echo-property prefix="${prefix}" pname="lsid.next_major" pad="   " />
+            <echo-property prefix="${prefix}" pname="lsid.next_minor" pad="   " />
+            <echo-property prefix="${prefix}" pname="lsid.next_patch" pad="   " />
+            <echo></echo>
+        </sequential>
+    </macrodef>
+
+    <target name="test-parseLsid"
+        description="for testing the parseLsid macrodef"
+    >
+        <property name="demo-baselsid" value="urn:lsid:org.genepattern:module.demo:00002" />
+        <parseLsid lsid="${demo-baselsid}"       prefix="test.no_version" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:1"     prefix="test.major_version" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:0.1"   prefix="test.minor_version" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:0.0.1" prefix="test.patch_version" verbose="true" />
+
+        <parseLsid lsid="${demo-baselsid}:2"     prefix="test.major_version" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:2.1"   prefix="test.minor_version" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:2.0.1" prefix="test.patch_version" verbose="true" />
+
+        <parseLsid lsid="${demo-baselsid}:4.8.33" prefix="test.patch_version" verbose="true" />
+
+    </target>
+
+&parseLsidRegexp;
+
+    <!--
+      ===================================================================
+          (Legacy) Lsid Version management
+      ===================================================================
+         Using 'release.version' and 'prerelease.version' files.
+
+         Example 'release.version' file: 
+             # update release version number
+             build.number=4
+
+         Example 'prerelease.version' file: 
+             # prerelease version number
+             prerelease.number=1
+    -->
+
+    <target name="init-release-version"
+        description="Set 'release.build.number' and 'release.prerelease.number' from the release.version and prerelease.version files"
+    >
+        <property file="release.version" prefix="release" />
+        <property file="prerelease.version" prefix="release" />
+        <echo>
+  $${release.build.number}      => ${release.build.number}
+  $${release.prerelease.number} => ${release.prerelease.number}
+        </echo>
+
+    </target>
+
+    <target name="require-common-module-code">
+        <!-- requires project name="gp.build-lsid" -->
+        <dirname property="this.dirname" file="${ant.file.gp.build-lsid}" />
+        <property name="common.module.code.dir" location="${this.dirname}/../../common_module_code" />
+        <echo>common.module.code.dir=${common.module.code.dir}</echo>
+    </target>
+
+    <target name="require-lsid-registry-name" depends="require-common-module-code">
+        <property name="lsid.registry.name" location="${common.module.code.dir}/module.lsid.registry" />
+        <property file="${lsid.registry.name}" /> 
+    </target>
+
+    <target name="require-test-version">
+        <property name="test.version" value="999999999" />
+    </target>
+
+    <target name="require-antcontrib" depends="require-common-module-code">
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <fileset dir="${common.module.code.dir}/lib" includes="*.jar" />
+            </classpath>
+        </taskdef>
+    </target>
+
+    <target name="require-propertycopy" depends="require-antcontrib" />
+
+    <target name="init-lsid-legacy" depends="require-antcontrib"
+        description="Set lsid properties from 'module.lsid.registry', 'release.version', and 'prerelease.version' files"
+    >
+        <property name="lsid.registry.name" location="${common.module.code.dir}/module.lsid.registry" />
+        <property file="${lsid.registry.name}" /> 
+        <property name="LSID.key" value="${ant.project.name}.lsid" />
+        <propertycopy name="LSID.noVersion" from="${LSID.key}" />
+        <echo>$${LSID.key} = ${LSID.key}</echo>
+        <echo>$${LSID.noVersion} = ${LSID.noVersion}</echo>
+    </target>
+
+    <!--
+        copied from commontargets.xml, with explicit dependencies
+    -->
+    <target name="getLSID" depends="require-antcontrib, require-lsid-registry-name, require-test-version">
+        <property file="${lsid.registry.name}" />
+        <property name="LSID.key" value="${ant.project.name}.lsid" />
+        <propertycopy name="LSID.noVersion" from="${LSID.key}" />
+        <condition value="${LSID.noVersion}:${version}" property="LSID" else="${LSID.noVersion}:${test.version}">
+            <isset property="version" />
+        </condition>
+        <echo>${LSID.key} = ${LSID}</echo>
+      </target>
+
+    <!--
+        Files to be ignored aka excluded from the module.zip file. Declared as an ant patternset.
+            See: https://ant.apache.org/manual/Types/patternset.html
+        Works best with Ant 1.8.2+, which adds 'defaultexcludes' for git and others.
+            See: https://ant.apache.org/manual/dirtasks.html
+    -->
+    <patternset id="module.excludes.default">
+        <exclude name="archive/**" />
+        <exclude name="buildnumber.properties" /> 
+        <exclude name="build.xml*" />
+        <exclude name="gpunit/**" />
+        <exclude name="prerelease.version" /> 
+        <exclude name="release.version" />
+        <exclude name="${dist.dir}/**" />
+        <exclude name="temp/**" />
+        <exclude name="tmp/**" />
+        <exclude name="to_del/**" />
+    </patternset>
+
+    <!-- 
+      Additional files to be excluded from the module.zip file. Declared as 
+      a comma- or space- separated list of values.
+    -->
+    <property name="module.excludes.extra" value="
+        test_excludes/**"
+    />
+
+    <patternset id="module.excludes" excludes="${module.excludes.extra}">
+        <patternset refid="module.excludes.default" />
+    </patternset>
+
+    <!--
+      ===================================================================
+          Preserve exec flags
+      ===================================================================
+        Preserve execute permission mode (chmod 755) when adding binary
+        files to the the module.zip file.
+
+        To add executable files to the module.zip file ...
+        Declare an 'exec-files' property whose value is a comma- or space-
+        separated list of file patterns. For example,
+
+            <property name="exec-files" value="bin/myapp" />
+
+        By default,
+            <property name="exec-files" value="" />
+        no exec flags are preserved.
+    -->
+    <condition property="has.exec-files" value="true">
+        <and>
+            <isset property="exec-files" />
+            <length string="${exec-files}" when="greater" length="0" />
+        </and>
+    </condition>
+
+    <!--
+      ===================================================================
+          Clean distribution files
+      ===================================================================
+    -->
+    <target name="clean-dist"
+        description="clean distribution files"
+    >
+        <delete dir="${dist.dir}" />
+    </target>
+
+</project>
