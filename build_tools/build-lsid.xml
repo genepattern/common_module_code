@@ -100,35 +100,39 @@
 
       prerelease.version=[-local.prerelease]
       build.metadata=[+local.buildnum]
-
-
-      Task: set-next-version, options include,
-          * as nextVersion, matches module integrator behavior
-          * as nextMajorVersion
-          * as nextMinorVersion
-          * as nextPatchVersion
-
-          Makes an edit to the manifest file
     -->
-    <target name="set-next-version" depends="init-module-version"
+
+    <!--
+          set-next-version
+      
+      Set a new lsid.version in the manifest file.
+
+      Options,
+          'version.increment', e.g. ant -Dversion.increment=next-minor set-next-version
+              next
+              next-major
+              next-minor
+              next-patch
+              test-version (aka 999999)
+              no-change
+    -->
+    <target name="set-next-version" depends="init-next-module-version"
         description="Set the next version, update the LSID in the manifest file"
     >
-
+        <!-- fail if next.module.version not set -->
+        <fail message="Missing required property, 'next.module.version' not set" unless:set="next.module.version" />
         <propertyfile file="manifest">
-            <entry key="LSID" type="string" value="" />
-            <entry key="product.build.major"   type="int"  value="=" />
-            <entry key="product.build.minor"   type="int"  operation="+" value="1" />
-            <entry key="product.build.patch"   type="int"  value="0" />
-            <entry key="product.build.date"    type="date" value="now" />
+            <entry key="LSID" type="string" value="${manifest.lsid.no_version}:${next.module.version}" />
         </propertyfile>
 
+        <!-- TODO: should only call this if the module.lsid.version actually changed -->
+        <antcall target="reset-build-number" />
     </target>
-
 
     <!--
         build.version
     -->
-    <target name="nextMinorVersion"
+    <target name="nextMinorVersion" depends="require-antcontrib"
         description="Increment minor version"
     >
         <property name="header" value="##Generated file - do not modify!" />
@@ -149,6 +153,14 @@
         <property name="build.metadata" value="+build.${build.number}" />
     </target>
 
+    <macrodef name="set-next-module-version">
+        <attribute name="name" default="next.module.version" />
+        <attribute name="value" />
+        <sequential>
+            <property name="@{name}" value="@{value}" />
+        </sequential>
+    </macrodef>
+
     <!-- 
       - set the 'next.module.version' property from the LSID in the manifest file
       - and the 'version.increment' property
@@ -156,25 +168,39 @@
       -     next-major
       -     next-minor
       -     next-patch
-      -     dev-999
+      -     test-version (aka 999999)
       -     no-change
     -->
-    <target name="init-next-module-version" depends="init-lsid-from-manifest">
-        <antcall target="reset-build-number" />
-
-        <property name="version.increment" value="next-patch" />
+    <target name="init-next-module-version" depends="init-lsid-from-manifest, require-antcontrib"
+        description="set the 'next.module.version', -Dversion.increment=next|next-major|next-minor|next-patch|test-version"
+    >
+        <property name="version.increment" value="" />
         <switch value="${version.increment}">
-            <case value="next">
-                <property name="next.module.version" value="${}" />
+        <case value="next">
+            <set-next-module-version value="${manifest.lsid.next_version}" />
             </case>
-            <case value="next-major">
+        <case value="next-major">
+            <set-next-module-version value="${manifest.lsid.next_major}" />
             </case>
-            <case value="next-minor"></case>
-            <case value="next-patch"></case>
-            <case value="max-version"></case>
-            <case value="none"></case>
+        <case value="next-minor">
+            <set-next-module-version value="${manifest.lsid.next_minor}" />
+            </case>
+        <case value="next-patch">
+            <set-next-module-version value="${manifest.lsid.next_patch}" />
+            </case>
+        <case value="test-version">
+            <property name="test.version" value="999999999" />
+            <set-next-module-version value="${test.version}" />
+            </case>
+        <case value="no-change">
+            <set-next-module-version value="${manifest.lsid.version}" />
+            </case>
+        <default>
+            <set-next-module-version value="${manifest.lsid.version}" />
+            </default>
         </switch>
 
+        <echo>next.module.version=${next.module.version}</echo>
     </target>
 
 
