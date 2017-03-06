@@ -98,7 +98,7 @@
           ${prerelease.version}\
           ${build.metadata}
 
-      prerelease.version=[-local.prerelease]
+      pre-release.version=[-local.prerelease]
       build.metadata=[+local.buildnum]
     -->
 
@@ -117,11 +117,14 @@
               no-change
     -->
     <target name="set-next-version" depends="init-next-module-version"
-        description="Set the next version, update the LSID in the manifest file"
+        description="set the lsid version and add a version comment to the manifest file"
     >
         <!-- fail if next.module.version not set -->
         <fail message="Missing required property, 'next.module.version' not set" unless:set="next.module.version" />
+        <!-- fail if version comment not set -->
+        <fail message="Missing required property, 'next.module.version.comment' not set" unless:set="next.module.version.comment" />
         <propertyfile file="manifest">
+            <entry key="version" type="string" value="${next.module.version.comment}" />
             <entry key="LSID" type="string" value="${manifest.lsid.no_version}:${next.module.version}" />
         </propertyfile>
 
@@ -253,6 +256,10 @@
 
     -->
 
+    <target name="require-parse-lsid" depends="define-parse-lsid" />
+
+    <target name="define-parse-lsid" depends="require-antcontrib">
+
     <!--
       ===================================================================
           parseLsid macrodef
@@ -302,17 +309,16 @@
 
             <local name="_lsid_in" />
             <property name="_lsid_in" value="@{lsid}" />
-            <local name="_prefix_in" />
-            <property name="_prefix_in" value="@{prefix}" />
-            <script language="javascript" setbeans="false">
-                lsid_tokens = project.getProperty('_lsid_in').split(':');
-                prefix = project.getProperty('_prefix_in');
-                if (!prefix) { 
-                    prefix='';
-                }
-                else if (!prefix.endsWith('.')) {
-                    prefix = prefix + '.';
-                }
+
+            <!-- if necessary, append '.' to prefix -->
+            <local name="prefix" />
+            <condition property="prefix" value="@{prefix}." else="@{prefix}" >
+                <length string="@{prefix}" when="greater" length="0" />
+            </condition>
+
+            <script language="javascript" setbeans="false"> <![CDATA[
+                var lsid_tokens = project.getProperty('_lsid_in').split(':');
+                prefix = project.getProperty('prefix');
                 lsid_version='';
                 if (lsid_tokens.length > 2) {
                     project.setProperty(prefix+'lsid.authority',  lsid_tokens[2]);
@@ -332,46 +338,65 @@
                     // lsid.version not set
                     project.setProperty(prefix+'lsid.version',    '');
                 }
+            ]]> </script>
 
-                if (lsid_version) {
-                    lsid_version_tokens = lsid_version.split('.');
-                    var X = 0;
-                    var Y = 0;
-                    var Z = 0;
-                    var nextVersion = "";
-                    var nextMajor = "";
-                    var nextMinor = "";
-                    var nextPatch = "";
-                    if (lsid_version_tokens.length > 0) {
-                        X = Number(lsid_version_tokens[0]);
-                        project.setProperty(prefix+'lsid.version.major', X);
-                        nextVersion = "" + (X+1);
-                        nextMajor = "" + (X+1);
-                        nextMinor = "" + X + ".1";
-                        nextPatch = "" + X + "." + "0" + "." + "1";
-                    }
-                    if (lsid_version_tokens.length > 1) {
-                        Y = Number(lsid_version_tokens[1]);
-                        project.setProperty(prefix+'lsid.version.minor', Y);
-                        nextVersion = "" + X + "." + (Y+1);
-                        nextMinor = "" + X + "." + (Y+1);
-                        nextPatch = "" + X + "." + Y + ".1";
-                    }
-                    if (lsid_version_tokens.length > 2) {
-                        Z = Number(lsid_version_tokens[2]);
-                        project.setProperty(prefix+'lsid.version.patch', Z);
-                        nextVersion = "" + X + "." + Y + "." + (Z+1);
-                        nextPatch = "" + X + "." + Y + "." + (Z+1);
-                    }
+            <local name="version" />
+            <condition property="version" value="${@{prefix}.lsid.version}" else="${@{prefix}lsid.version}" >
+                <length string="@{prefix}" when="greater" length="0" />
+            </condition>
+            <echo>version=${version}</echo>
 
-                    project.setProperty(prefix+'lsid.next_version', nextVersion);
-                    project.setProperty(prefix+'lsid.next_major', nextMajor);
-                    project.setProperty(prefix+'lsid.next_minor', nextMinor);
-                    project.setProperty(prefix+'lsid.next_patch', nextPatch);
+            <parse-lsid-version version="${version}" prefix="@{prefix}" verbose="true" type="lsid" failonerror="true" />
+
+            <script language="javascript" setbeans="false"> <![CDATA[
+                prefix = project.getProperty('prefix');
+
+                var X = Number( project.getProperty(prefix+'lsid.version.major') );
+                var Y = Number( project.getProperty(prefix+'lsid.version.minor') );
+                var Z = Number( project.getProperty(prefix+'lsid.version.patch') );
+
+                // major, X
+                var nextMajor = "" + (X+1);
+                var nextMinor = "" + X + ".1";
+                var nextPatch = "" + X + "." + "0" + "." + "1";
+                var nextVersion = nextMajor;
+
+                // minor, X.Y 
+                if (Y) {
+                    nextMinor = "" + X + "." + (Y+1);
+                    nextPatch = "" + X + "." + Y + ".1";
+                    nextVersion = nextMinor;
                 }
-            </script>
 
+                // patch, X.Y.Z
+                if (Z) {
+                    nextPatch = "" + X + "." + Y + "." + (Z+1);
+                    nextVersion = nextPatch;
+                }
+
+                project.setProperty(prefix+'lsid.next_version', nextVersion);
+                project.setProperty(prefix+'lsid.next_major', nextMajor);
+                project.setProperty(prefix+'lsid.next_minor', nextMinor);
+                project.setProperty(prefix+'lsid.next_patch', nextPatch);
+            ]]> </script>
             <echo-lsid prefix="@{prefix}" if:true="@{verbose}" />
+        </sequential>
+    </macrodef>
+  </target>
+
+    <macrodef name="set-property">
+        <attribute name="prefix" default="" />
+        <attribute name="name" />
+        <attribute name="value" />
+
+        <sequential>
+            <!-- if necessary, append '.' -->
+            <local name="name" />
+            <condition property="name" value="@{prefix}.@{name}" else="@{name}" >
+                <length string="@{prefix}" when="greater" length="0" />
+            </condition>
+
+            <property name="${name}" value="@{value}" />
         </sequential>
     </macrodef>
 
@@ -393,7 +418,7 @@
             <condition property="pname.set" else="false">
                 <isset property="@{prefix}@{pname}" />
             </condition>
-            <echo if:true="${verbose}">pname.set: ${pname.set}</echo>
+            <echo if:true="@{verbose}">pname.set: ${pname.set}</echo>
 
             <echo     if:true="${pname.set}">  @{prefix}@{pname} @{pad} => ${@{prefix}@{pname}}</echo>
             <echo unless:true="${pname.set}">  @{prefix}@{pname} @{pad} => @{empty-val} </echo>
@@ -425,20 +450,168 @@
         </sequential>
     </macrodef>
 
-    <target name="test-parseLsid"
-        description="for testing the parseLsid macrodef"
+    <target name="test-parse-lsid" depends="require-parse-lsid"
+        description="for testing the parseLsid macrodef, single run"
     >
         <property name="demo-baselsid" value="urn:lsid:org.genepattern:module.demo:00002" />
-        <parseLsid lsid="${demo-baselsid}"       prefix="test.no_version" verbose="true" />
-        <parseLsid lsid="${demo-baselsid}:1"     prefix="test.major_version" verbose="true" />
-        <parseLsid lsid="${demo-baselsid}:0.1"   prefix="test.minor_version" verbose="true" />
-        <parseLsid lsid="${demo-baselsid}:0.0.1" prefix="test.patch_version" verbose="true" />
+        <property name="verbose" value="true" />
+        <property name="prefix" value="" />
 
-        <parseLsid lsid="${demo-baselsid}:2"     prefix="test.major_version" verbose="true" />
-        <parseLsid lsid="${demo-baselsid}:2.1"   prefix="test.minor_version" verbose="true" />
-        <parseLsid lsid="${demo-baselsid}:2.0.1" prefix="test.patch_version" verbose="true" />
+        <input message="Set -Dversion=" addproperty="version"
+            defaultvalue="2" 
+        />
 
-        <parseLsid lsid="${demo-baselsid}:4.8.33" prefix="test.patch_version" verbose="true" />
+<!--
+        <input message="Enter prefix: " addproperty="prefix"
+            defaultvalue="" 
+        />
+-->
+
+        <parseLsid lsid="${demo-baselsid}:${version}"  prefix="${prefix}" verbose="${verbose}" />
+
+    </target>
+
+    <target name="test-parse-lsid-suite" depends="require-parse-lsid"
+        description="for testing the parseLsid macrodef, built-in suite"
+    >
+        <property name="demo-baselsid" value="urn:lsid:org.genepattern:module.demo:00002" />
+        <parseLsid lsid="${demo-baselsid}"       prefix="test.01" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:1"     prefix="test.02" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:0.1"   prefix="test.03" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:0.0.1" prefix="test.04" verbose="true" />
+
+        <parseLsid lsid="${demo-baselsid}:2"     prefix="test.05" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:2.1"   prefix="test.06" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:2.0.1" prefix="test.07" verbose="true" />
+
+        <parseLsid lsid="${demo-baselsid}:4.8.33" prefix="test.08" verbose="true" />
+
+        <!-- invalid lsid ... -->
+        <parseLsid lsid="${demo-baselsid}:v1" prefix="test.09" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:v1.2" prefix="test.10" verbose="true" />
+        <parseLsid lsid="${demo-baselsid}:v1.2.5" prefix="test.11" verbose="true" />
+
+    </target>
+
+    <!--
+                value="^([0-9]+)(|\.([0-9]+)(|\.([0-9]+)))(-.+)?(\+.+)?$" 
+                select="X='\1', Y='\3', Z='\5', prerelease='\6', build='\7'"
+
+                value="^([0-9]+)(\.([0-9]+))?(\.([0-9]+))?(-[^+]+)?(\+.*)?$"
+
+
+      pre-release.version=[-local.prerelease]
+      build.metadata=[+local.buildnum]
+    -->
+    <macrodef name="parse-lsid-version">
+        <attribute name="version" description="the lsid version string" />
+        <attribute name="prefix" default="" 
+            description="prefix to prepend to the lsid.* property names; similar to 'prefix' attribute of the property task" 
+        />
+        <attribute name="type" default="strict" 
+            description="one of 'strict', 'lsid', 'semver', semver accepts optional -prerelease and +build tags" />
+        <attribute name="verbose" default="false" />
+        <attribute name="failonerror" default="true" />
+        <attribute name="ignoreempty" default="true" />
+
+        <sequential>
+            <!-- if necessary, append '.' to prefix -->
+            <local name="prefix" />
+            <condition property="prefix" value="@{prefix}." else="@{prefix}" >
+                <length string="@{prefix}" when="greater" length="0" />
+            </condition>
+
+            <!-- ignore lsid.no_version -->
+            <fail message="lsid.version not set">
+                <condition>
+                    <and>
+                        <equals arg1="@{failonerror}" arg2="true" />
+                        <not><equals arg1="@{ignoreempty}" arg2="true" /></not>
+                        <not><equals arg1="@{version}" arg2="" /></not>
+                    </and>
+                </condition>
+            </fail>
+
+            <local name="lsid.version.regex" />
+            <property name="lsid.version.regex" 
+                value="^([0-9]+)(\.([0-9]+))?(\.([0-9]+))?(-[^+]+)?(\+.*)?$"
+            /> 
+
+            <propertyregex property="${prefix}lsid.version.regex_selection" 
+                input="@{version}" regexp="${lsid.version.regex}"
+                select="1='\1', 2='\2', 3='\3', 4='\4', 5='\5', 6='\6', 7='\7', 8='\8'"
+            />
+            <echo-property prefix="${prefix}" pname="lsid.version.regex_selection" pad="     " />
+<!--
+            <echo if:true="@{verbose}">X.Y.Z-prerelease+build: ${${pname}}</echo>
+-->
+            <!--
+              Error handling
+              Throw exception when ...
+                  a) type is strict aka lsid and prerelease and build are set
+            -->
+            <fail message="Invalid lsid.version='@{version}'">
+                <condition>
+                    <and>
+                        <equals arg1="@{failonerror}" arg2="true" />
+                        <not><isset property="lsid.version.regex_selection" /></not>
+                        <!-- short-circuit: emtpy version, must be non-empty or !ignoreempty -->
+                        <and>
+                            <not><equals arg1="@{ignoreempty}" arg2="true" /></not>
+                            <equals arg1="@{version}" arg2="" />
+                        </and>
+                    </and>
+                </condition>
+            </fail>
+
+            <propertyregex property="${prefix}lsid.version.major" select="\1"
+                input="@{version}" regexp="${lsid.version.regex}" />
+            <propertyregex property="${prefix}lsid.version.minor" select="\3"
+                input="@{version}" regexp="${lsid.version.regex}" />
+            <propertyregex property="${prefix}lsid.version.patch" select="\5"
+                input="@{version}" regexp="${lsid.version.regex}" />
+            <propertyregex property="${prefix}lsid.version.prerelease" select="\6"
+                input="@{version}" regexp="${lsid.version.regex}" />
+            <propertyregex property="${prefix}lsid.version.build" select="\7"
+                input="@{version}" regexp="${lsid.version.regex}" />
+
+            <echo-property prefix="${prefix}" pname="lsid.version.major" pad="     " />
+            <echo-property prefix="${prefix}" pname="lsid.version.minor" pad="     " />
+            <echo-property prefix="${prefix}" pname="lsid.version.patch" pad="     " />
+            <echo-property prefix="${prefix}" pname="lsid.version.prerelease" pad="" />
+            <echo-property prefix="${prefix}" pname="lsid.version.build" pad="     " />
+
+            <fail message="Invalid lsid.version='@{version}', Set type='semver' to allow 'prerelease' and or 'build metadata'">
+                <condition>
+                    <and>
+                        <equals arg1="@{failonerror}" arg2="true" />
+                        <not><equals arg1="@{type}" arg2="semver" /></not>
+                        <or>
+                            <not><equals arg1="${@{prefix}prerelease}" arg2="" /></not>
+                            <not><equals arg1="${@{prefix}build}" arg2="" /></not>
+                        </or>
+                        <!-- short-circuit: emtpy version, must be non-empty or !ignoreempty -->
+                        <and>
+                            <not><equals arg1="@{ignoreempty}" arg2="true" /></not>
+                            <equals arg1="@{version}" arg2="" />
+                        </and>
+                    </and>
+                </condition>
+            </fail>
+        </sequential>
+    </macrodef>
+
+    <target name="test-lsid-version" depends="require-antcontrib"
+        description="test lsid-version regexp"
+    >
+        <!-- require a valid lsid-version, e.g. X[.Y[.Z]] 
+                    regexp="([0-9]+)(|\.([0-9]+)(|\.([0-9]+)))$"
+        -->
+        <input message="Enter lsid.version: " addproperty="lsid.version"
+            defaultvalue="3.14.159" 
+        />
+        <input message="Enter prefix: " addproperty="prefix" />
+        <parse-lsid-version version="${lsid.version}" prefix="${prefix}" verbose="true" type="strict" />
 
     </target>
 
