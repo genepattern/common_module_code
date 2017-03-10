@@ -290,17 +290,42 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
         <condition property="lsid.version.changed">
             <not><equals arg1="${manifest.lsid.version}" arg2="${next.module.version}" /></not>
         </condition>
-<!--
-        <fail unless="lsid.version.changed" 
+        <!-- example: fail the build if the version didn't change
+         fail unless="lsid.version.changed" 
             message="lsid.version did not change, not changing version comment without a new lsid.version" 
-        />
--->
+         /
+        -->
         <propertyfile file="manifest">
             <entry key="version" type="string" value="${next.module.version.comment}" />
             <entry key="LSID" type="string" value="${manifest.lsid.no_version}:${next.module.version}" />
         </propertyfile>
 
         <antcall target="reset-buildnumber" if:true="${lsid.version.changed}" />
+    </target>
+
+
+    <target name="set-base-lsid" depends="prompt-version.increment.flag, load-manifest"
+        description="set the base lsid (aka 'lsid.no_version') in the manifest file"
+    >
+
+        <input message="Set the base lsid in the manifest file, -Dnext.lsid.no_version=" addproperty="next.lsid.no_version"
+        />
+        <log-property name="next.lsid.no_version" />
+
+        <fail-if-not-set prop="next.lsid.no_version" />
+        <propertyfile file="manifest">
+            <entry key="version" type="string" value="${next.module.version.comment}" />
+            <entry key="LSID" type="string" value="${next.lsid.no_version}:${next.module.version}" />
+        </propertyfile>
+    </target>
+
+    <target name="set-version-comment" depends="load-manifest, prompt-version.comment"
+        description="set version comment in the manifest file"
+    >
+        <fail-if-not-set prop="next.module.version.comment" />
+        <propertyfile file="manifest">
+            <entry key="version" type="string" value="${next.module.version.comment}" />
+        </propertyfile>
     </target>
 
     <!-- Prompt for the 'version.increment.flag' -->
@@ -327,32 +352,7 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
         description="Set the 'next.module.version' from the current LSID version"
     >
         <property name="version.increment.flag" value="none" />
-        <switch value="${version.increment.flag}">
-        <case value="next">
-            <property name="next.module.version" value="${manifest.lsid.next_version}" />
-            </case>
-        <case value="major">
-            <property name="next.module.version" value="${manifest.lsid.next_major}" />
-            </case>
-        <case value="minor">
-            <property name="next.module.version" value="${manifest.lsid.next_minor}" />
-            </case>
-        <case value="patch">
-            <property name="next.module.version" value="${manifest.lsid.next_patch}" />
-            </case>
-        <case value="test">
-            <fail-if-not-set prop="lsid.test_version" />
-            <property name="next.module.version" value="${lsid.test_version}" />
-            </case>
-        <case value="none">
-            <property name="next.module.version" value="${manifest.lsid.version}" />
-            </case>
-        <default>
-            <fail message="Incorrect 'version.increment.flag'=" />
-            <property name="next.module.version" value="${manifest.lsid.version}" />
-            </default>
-        </switch>
-
+        <set-next-version increment="${version.increment.flag}" />
         <log-property name="next.module.version" />
     </target>
 
@@ -373,10 +373,20 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
         <echo>${manifest.version}</echo>
     </target>
 
+    <!--
+      ===================================================================
+          LSID
+      ===================================================================
+      Template:
+          urn:lsid:{authority}:{namespace}:{id}:{version}
 
-    <!-- 
-      note: define the parse-lsid macrodef within a target as a way to
-          include antcontrib as a dependency
+      Example, ConvertLineEndings
+          urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00002:1
+          
+          authority  => broad.mit.edu
+          namespace  => cancer.software.genepattern.module.analysis
+          id         => 00002
+          version    => 1
     -->
 
     <!--
@@ -416,6 +426,7 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
  -->
     <target name="require-parse-lsid" depends="define-parse-lsid" />
     <target name="define-parse-lsid" depends="require-antcontrib">
+        <!-- define macrodef in a target to include antcontrib as a dependency -->
         <macrodef name="parse-lsid"
             description="Set lsid properties of the form '@{prefix}.lsid.[authority | namespace | identifier | version | no_version]'"
         >
@@ -594,29 +605,84 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
                 </fail>
             </sequential>
         </macrodef>
+
+        <macrodef name="set-next-version">
+            <attribute name="lsid-prefix" default="manifest" 
+                description="in support of variable lsid properties, e.g. getProperty( ${@{lsid-prefix}.lsid.next_version )" 
+            />
+            <attribute name="name" default="next.module.version" 
+                description="the name of the property to set, e.g. 'next.module.version'"
+            />
+            <attribute name="increment" default="none" />
+            <!-- attribute name="lsid.test_version" default="${lsid.test_version}" / -->
+    <!--
+            <attribute name="test_version" default="999999999" 
+                description="the hard-coded lsid.version for a test module, e.g. '999999999'"
+            />
+    -->
+            <sequential>
+                <switch value="@{increment}">
+                <case value="next">
+                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_version" />
+                    </case>
+                <case value="major">
+                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_major" />
+                    </case>
+                <case value="minor">
+                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_minor" />
+                    </case>
+                <case value="patch">
+                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_patch" />
+                    </case>
+                <case value="test">
+                    <fail-if-not-set prop="lsid.test_version" />
+                    <property name="@{name}" value="${lsid.test_version}" />
+                    </case>
+                <case value="none">
+                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.version" />
+                    </case>
+                <default>
+                    <fail message="Incorrect version.increment.flag='@{increment}'" />
+                    </default>
+                </switch>
+            </sequential>
+        </macrodef>
+    </target>
+
+    <target name="test-set-next-version" depends="define-parse-lsid, load-manifest, prompt-version.increment.flag"
+        description="for testing the 'set-next-version' macrodef"
+    >
+        <set-next-version increment="${version.increment.flag}" />
+        <echo-property name="version.increment.flag" />
+        <echo-property name="next.module.version" />
     </target>
 
     <!--
-      Example 'set-property' macrodef, allows setting a property with a variable
-      property name.
+      set-property-from macrodef
+
+          Set a property from an existing property, similar to antcontrib propertycopy,
+      with additional support for 'prefix' attribute.
+
+      In support of variable property names, e.g.
+           set ${name-prefix}${name} <=== get( from-prefix.from );
 
       Usage:
-          <set-property name="my-property" value="my-value" />
-          <set-property prefix="my-prefix" name="my-property" value="my-value" />
+          <set-property-from name="my-property" from-prefix="my-prefix" from="from-property-name" />
     -->
-    <macrodef name="set-property">
-        <attribute name="prefix" default="" />
+    <macrodef name="set-property-from">
+        <attribute name="name-prefix" default="" />
         <attribute name="name" />
-        <attribute name="value" />
-
+        <attribute name="from-prefix" default="" />
+        <attribute name="from" />
         <sequential>
-            <!-- if necessary, append '.' -->
+            <!-- if necessary, append '@{name-prefix}.' to @{name} -->
             <local name="name" />
-            <condition property="name" value="@{prefix}.@{name}" else="@{name}" >
-                <length string="@{prefix}" when="greater" length="0" />
+            <condition property="name" value="@{name-prefix}.@{name}" else="@{name}" >
+                <length string="@{name-prefix}" when="greater" length="0" />
             </condition>
-
-            <property name="${name}" value="@{value}" />
+            <condition property="${name}" value="${@{from-prefix}.@{from}}" else="${@{from}}" >
+                <length string="@{from-prefix}" when="greater" length="0" />
+            </condition>
         </sequential>
     </macrodef>
 
