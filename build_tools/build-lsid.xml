@@ -273,22 +273,13 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
 
     -->
 
-
-    <!--
-          set-next-version
-      
-      Set a new lsid.version in the manifest file.
-
-      Options,
-          'version.increment.flag'
-    -->
     <target name="increment-version" depends="init-next-module-version, prompt-version.comment"
         description="set the lsid version and add a version comment to the manifest file"
     >
-        <fail-if-not-set prop="next.module.version" />
-        <fail-if-not-set prop="next.module.version.comment" />
+        <fail-if-not-set prop="next.version" />
+        <fail-if-not-set prop="next.version.comment" />
         <condition property="lsid.version.changed">
-            <not><equals arg1="${manifest.lsid.version}" arg2="${next.module.version}" /></not>
+            <not><equals arg1="${manifest.lsid.version}" arg2="${next.version}" /></not>
         </condition>
         <!-- example: fail the build if the version didn't change
          fail unless="lsid.version.changed" 
@@ -296,64 +287,68 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
          /
         -->
         <propertyfile file="manifest">
-            <entry key="version" type="string" value="${next.module.version.comment}" />
-            <entry key="LSID" type="string" value="${manifest.lsid.no_version}:${next.module.version}" />
+            <entry key="version" type="string" value="${next.version.comment}" />
+            <entry key="LSID" type="string" value="${manifest.lsid.no_version}:${next.version}" />
         </propertyfile>
 
         <antcall target="reset-buildnumber" if:true="${lsid.version.changed}" />
     </target>
 
 
-    <target name="set-base-lsid" depends="prompt-version.increment.flag, load-manifest"
+    <target name="set-base-lsid" depends="prompt-increment, load-manifest, init-next-module-version"
         description="set the base lsid (aka 'lsid.no_version') in the manifest file"
     >
 
         <input message="Set the base lsid in the manifest file, -Dnext.lsid.no_version=" addproperty="next.lsid.no_version"
         />
         <log-property name="next.lsid.no_version" />
-
         <fail-if-not-set prop="next.lsid.no_version" />
+
+        <fail-if-not-set prop="next.version" />
+        <property name="next.version.comment" value="Changing base lsid to '${next.lsid.no_version}'" />
+        <fail-if-not-set prop="next.version.comment" />
+
         <propertyfile file="manifest">
-            <entry key="version" type="string" value="${next.module.version.comment}" />
-            <entry key="LSID" type="string" value="${next.lsid.no_version}:${next.module.version}" />
+            <entry key="version" type="string" value="${next.version.comment}" />
+            <entry key="LSID" type="string" value="${next.lsid.no_version}:${next.version}" />
         </propertyfile>
     </target>
 
     <target name="set-version-comment" depends="load-manifest, prompt-version.comment"
         description="set version comment in the manifest file"
     >
-        <fail-if-not-set prop="next.module.version.comment" />
+        <fail-if-not-set prop="next.version.comment" />
         <propertyfile file="manifest">
-            <entry key="version" type="string" value="${next.module.version.comment}" />
+            <entry key="version" type="string" value="${next.version.comment}" />
         </propertyfile>
     </target>
 
-    <!-- Prompt for the 'version.increment.flag' -->
-    <target name="prompt-version.increment.flag" depends="init">
-        <input message="Set -Dversion.increment.flag=" addproperty="version.increment.flag"
-            validargs="next,major,minor,patch,test,none"
+    <!-- Prompt for the version 'increment' flag -->
+    <target name="prompt-increment" depends="init">
+        <input message="Set -Dincrement=" addproperty="increment"
+            validargs="next,major,minor,patch,fixed,none"
             defaultvalue="next"
         />
-        <log-property name="version.increment.flag" />
+        <log-property name="increment" />
     </target>
 
     <target name="prompt-version.comment" depends="init">
-        <input message="" addproperty="next.module.version.comment" />
-        <log-property name="next.module.version.comment" />
+        <input message="" addproperty="next.version.comment" />
+        <log-property name="next.version.comment" />
     </target>
 
     <!-- 
-      Set the 'next.module.version' property from the LSID in the manifest,
-      based on the 'version.increment.flag':
-          next | major | minor | patch | test (aka 999999) | none
+      Set the 'next.version' property from the LSID in the manifest,
+      based on the 'increment' flag:
+          next | major | minor | patch | fixed (aka 999999) | none
     -->
     <target name="init-next-module-version" 
-        depends="prompt-version.increment.flag, load-manifest"
-        description="Set the 'next.module.version' from the current LSID version"
+        depends="prompt-increment, load-manifest"
+        description="Set the 'next.version' from the current LSID version"
     >
-        <property name="version.increment.flag" value="none" />
-        <set-next-version increment="${version.increment.flag}" />
-        <log-property name="next.module.version" />
+        <property name="increment" value="none" />
+        <set-next-version increment="${increment}" />
+        <log-property name="next.version" />
     </target>
 
     <target name="show-lsid-from-manifest" depends="load-manifest"
@@ -372,6 +367,24 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
         <echo unless:set="build.number">v${manifest.lsid.version}</echo>
         <echo>${manifest.version}</echo>
     </target>
+
+    <target name="show-next-version" depends="load-manifest, load-buildnumber, prompt-increment"
+        description="Show the next lsid version"
+    >
+        <echo>next:       ${manifest.lsid.increment.next}</echo>
+        <echo>next_major: ${manifest.lsid.increment.major}</echo>
+        <echo>next_minor: ${manifest.lsid.increment.minor}</echo>
+        <echo>next_patch: ${manifest.lsid.increment.patch}</echo>
+        <echo>test:       ${manifest.lsid.increment.fixed}</echo>
+        <echo>none:       ${manifest.lsid.increment.none}</echo>
+
+        <condition property="next_version" value="manifest.lsid.increment.${increment}" else="manifest.lsid.increment.none">
+            <isset property="increment" />
+        </condition>
+        <echo-property name="${next_version}" />
+    </target>
+
+
 
     <!--
       ===================================================================
@@ -464,12 +477,10 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
                     }
                     if (lsid_tokens.length > 5) {
                         lsid_version=lsid_tokens[5];
-                        project.setProperty(prefix+'lsid.version',    lsid_tokens[5]);
                     }
-                    else {
-                        // lsid.version not set
-                        project.setProperty(prefix+'lsid.version',    '');
-                    }
+                    project.setProperty(prefix+'lsid.version',         lsid_version);
+                    project.setProperty(prefix+'lsid.increment.none',  lsid_version);
+                    project.setProperty(prefix+'lsid.increment.fixed', '999999999');
                 ]]> </script>
 
                 <local name="version" />
@@ -506,10 +517,11 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
                         nextVersion = nextPatch;
                     }
 
-                    project.setProperty(prefix+'lsid.next_version', nextVersion);
-                    project.setProperty(prefix+'lsid.next_major', nextMajor);
-                    project.setProperty(prefix+'lsid.next_minor', nextMinor);
-                    project.setProperty(prefix+'lsid.next_patch', nextPatch);
+                    project.setProperty(prefix+'lsid.increment.next',  nextVersion);
+                    project.setProperty(prefix+'lsid.increment.major', nextMajor);
+                    project.setProperty(prefix+'lsid.increment.minor', nextMinor);
+                    project.setProperty(prefix+'lsid.increment.patch', nextPatch);
+
                 ]]> </script>
                 <echo-lsid prefix="@{prefix}" if:true="@{verbose}" />
             </sequential>
@@ -610,64 +622,46 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
             <attribute name="lsid-prefix" default="manifest" 
                 description="in support of variable lsid properties, e.g. getProperty( ${@{lsid-prefix}.lsid.next_version )" 
             />
-            <attribute name="name" default="next.module.version" 
-                description="the name of the property to set, e.g. 'next.module.version'"
+            <attribute name="name" default="next.version" 
+                description="the name of the property to set, e.g. 'next.version'"
             />
             <attribute name="increment" default="none" />
-            <!-- attribute name="lsid.test_version" default="${lsid.test_version}" / -->
-    <!--
-            <attribute name="test_version" default="999999999" 
-                description="the hard-coded lsid.version for a test module, e.g. '999999999'"
-            />
-    -->
             <sequential>
-                <switch value="@{increment}">
-                <case value="next">
-                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_version" />
-                    </case>
-                <case value="major">
-                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_major" />
-                    </case>
-                <case value="minor">
-                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_minor" />
-                    </case>
-                <case value="patch">
-                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.next_patch" />
-                    </case>
-                <case value="test">
-                    <fail-if-not-set prop="lsid.test_version" />
-                    <property name="@{name}" value="${lsid.test_version}" />
-                    </case>
-                <case value="none">
-                    <set-property-from name="@{name}" from-prefix="@{lsid-prefix}" from="lsid.version" />
-                    </case>
-                <default>
-                    <fail message="Incorrect version.increment.flag='@{increment}'" />
-                    </default>
-                </switch>
+                <local name="prefix" />
+                <condition property="prefix" value="@{lsid-prefix}." else="@{lsid-prefix}" >
+                    <length string="@{lsid-prefix}" when="greater" length="0" />
+                </condition>
+
+                <local name="increment_prop" />
+                <condition property="increment_prop" value="${prefix}lsid.increment.@{increment}" else="${prefix}lsid.increment.none">
+                    <length string="@{increment}" when="greater" length="0" />
+                </condition>
+                <set-property-from name="@{name}" from="${increment_prop}" />
+                <fail-if-not-set prop="${increment_prop}" />
+                <log-property name="@{name}" />
             </sequential>
         </macrodef>
     </target>
 
-    <target name="test-set-next-version" depends="define-parse-lsid, load-manifest, prompt-version.increment.flag"
+    <target name="test-set-next-version" depends="define-parse-lsid, load-manifest, prompt-increment"
         description="for testing the 'set-next-version' macrodef"
     >
-        <set-next-version increment="${version.increment.flag}" />
-        <echo-property name="version.increment.flag" />
-        <echo-property name="next.module.version" />
+        <set-next-version increment="${increment}" />
+        <echo-property name="increment" />
+        <echo-property name="next.version" />
     </target>
 
     <!--
       set-property-from macrodef
 
           Set a property from an existing property, similar to antcontrib propertycopy,
-      with additional support for 'prefix' attribute.
+      with additional 'name-prefix' and 'from-prefix' attributes.
 
-      In support of variable property names, e.g.
-           set ${name-prefix}${name} <=== get( from-prefix.from );
+          The optional 'name-prefix' modifies the name of the property to set.
+          The optional 'from-prefix' modifies the name of the property to get.
 
-      Usage:
-          <set-property-from name="my-property" from-prefix="my-prefix" from="from-property-name" />
+      E.g.
+          <property name=${[${name-prefix}.]name} value=${[${from-prefix}.]from} />
     -->
     <macrodef name="set-property-from">
         <attribute name="name-prefix" default="" />
@@ -769,10 +763,12 @@ If run in a git repo, it will also create a version commit and tag, and fail if 
     <macrodef name="echo-lsid-next-version">
         <attribute name="prefix" default="" />
         <sequential>
-            <echo-property prefix="@{prefix}" name="lsid.next_major" pad="   " />
-            <echo-property prefix="@{prefix}" name="lsid.next_minor" pad="   " />
-            <echo-property prefix="@{prefix}" name="lsid.next_patch" pad="   " />
-            <echo-property prefix="@{prefix}" name="lsid.next_version" pad=" " />
+            <echo-property prefix="@{prefix}" name="lsid.increment.next" pad="    " />
+            <echo-property prefix="@{prefix}" name="lsid.increment.major" pad="   " />
+            <echo-property prefix="@{prefix}" name="lsid.increment.minor" pad="   " />
+            <echo-property prefix="@{prefix}" name="lsid.increment.patch" pad="   " />
+            <echo-property prefix="@{prefix}" name="lsid.increment.fixed" pad="   " />
+            <echo-property prefix="@{prefix}" name="lsid.increment.none" pad="    " />
         </sequential>
     </macrodef>
 
