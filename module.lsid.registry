@@ -396,6 +396,9 @@ REVEALER.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis
 Chip2Chip.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00361
 DESeq2.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00362
 IGV.js.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00363
+MAGeCK.Count.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00364
+MAGeCK.Test.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00365
+MAGeCK.Pathway.Analysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00366
 
 ########################################
 # STAR aligner modules
