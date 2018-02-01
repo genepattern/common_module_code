@@ -399,6 +399,8 @@ IGV.js.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:0
 MAGeCK.Count.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00364
 MAGeCK.Test.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00365
 MAGeCK.Pathway.Analysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00366
+Hisat2Aligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00367
+Hisat2Indexer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00368
 
 ########################################
 # STAR aligner modules
