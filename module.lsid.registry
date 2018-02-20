@@ -402,6 +402,7 @@ MAGeCK.Pathway.Analysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.
 Hisat2Aligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00367
 Hisat2Indexer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00368
 download_from_gdc.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00369
+StarAligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00370
 
 ########################################
 # STAR aligner modules
