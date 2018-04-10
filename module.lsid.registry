@@ -405,6 +405,7 @@ download_from_gdc.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module
 STAR.aligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00370
 STAR.indexer=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00371
 txt2odf.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00372
+MinfiPreprocessing.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00373
 
 ########################################
 # STAR aligner modules
