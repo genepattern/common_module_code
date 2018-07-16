@@ -409,8 +409,8 @@ MinfiPreprocessing.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.modul
 ABasicModule.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00374
 ConumeeCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00375
 CoGAPS.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00376
-SingleCellToolkit=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00377
-Amaretto=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00378
+SingleCellToolkit.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00377
+Amaretto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00378
 
 
 ########################################
