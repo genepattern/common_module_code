@@ -411,6 +411,7 @@ ConumeeCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.modul
 CoGAPS.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00376
 SingleCellToolkit.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00377
 Amaretto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00378
+MethylationCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00379
 
 
 ########################################
