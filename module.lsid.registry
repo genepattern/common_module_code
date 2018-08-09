@@ -412,7 +412,7 @@ CoGAPS.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:0
 SingleCellToolkit.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00377
 Amaretto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00378
 MethylationCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00379
-
+MutPanning.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00380
 
 ########################################
 # STAR aligner modules
