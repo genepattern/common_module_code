@@ -414,6 +414,7 @@ Amaretto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis
 MethylationCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00379
 MutPanning.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00380
 CommunityAmaretto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00381
+ScanpyPreprocess.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00382
 
 ########################################
 # STAR aligner modules
