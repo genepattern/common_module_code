@@ -415,6 +415,8 @@ MethylationCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.m
 MutPanning.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00380
 CommunityAmaretto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00381
 ScanpyUtilities.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00382
+#2019-04-22 Note from Edwin: we should probaly change the structure of LSIDs to not be inherently tied to broad.mit.edu, but that's not a priority
+Kallisto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00383
 
 ########################################
 # STAR aligner modules
