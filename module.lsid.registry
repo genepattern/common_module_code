@@ -417,6 +417,10 @@ CommunityAmaretto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module
 ScanpyUtilities.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00382
 #2019-04-22 Note from Edwin: we should probaly change the structure of LSIDs to not be inherently tied to broad.mit.edu, but that's not a priority
 Kallisto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00383
+Seurat-Read.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00384
+Seurat-Filter.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00385
+Seurat-Normalize.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00386
+
 
 ########################################
 # STAR aligner modules
