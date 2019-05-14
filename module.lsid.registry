@@ -420,6 +420,8 @@ Kallisto.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis
 Seurat-Read.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00384
 Seurat-Filter.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00385
 Seurat-Normalize.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00386
+Seurat-Find-Variable-Genes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00387
+Seurat-Scale-Expression.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00388
 
 
 ########################################
