@@ -422,6 +422,10 @@ Seurat-Filter.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.ana
 Seurat-Normalize.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00386
 Seurat-Find-Variable-Genes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00387
 Seurat-Scale-Expression.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00388
+Seurat-PCA.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00389
+Seurat-TSNE.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00390
+Seurat-DimPLot.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00391
+Seurat-Find-Clusters.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00392
 
 
 ########################################
