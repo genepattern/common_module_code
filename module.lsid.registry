@@ -424,7 +424,7 @@ Seurat-Find-Variable-Genes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepatte
 Seurat-Scale-Expression.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00388
 Seurat-PCA.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00389
 Seurat-TSNE.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00390
-Seurat-DimPLot.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00391
+Seurat-DimPlots.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00391
 Seurat-Find-Clusters.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00392
 
 
