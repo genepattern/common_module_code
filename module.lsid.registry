@@ -426,6 +426,7 @@ Seurat-PCA.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analys
 Seurat-TSNE.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00390
 Seurat-DimPlots.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00391
 Seurat-Find-Clusters.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00392
+DiSCoVER.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00393
 
 
 ########################################
