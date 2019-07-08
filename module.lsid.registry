@@ -427,7 +427,7 @@ Seurat-TSNE.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analy
 Seurat-DimPlots.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00391
 Seurat-Find-Clusters.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00392
 DiSCoVER.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00393
-
+EditDataset.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00394
 
 ########################################
 # STAR aligner modules
