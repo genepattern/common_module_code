@@ -427,17 +427,17 @@ Seurat-TSNE.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analy
 Seurat-DimPlots.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00391
 Seurat-Find-Clusters.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00392
 DiSCoVER.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00393
-EditDataset.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00394
-STREAM.Preprocess.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00395
-STREAM.FeatureSelection.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00395
-STREAM.DimensionReduction.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00396
-STREAM.SeedEPGStructure.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00397
-STREAM.ElasticPrincipalGraph.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00398
-STREAM.AdjustFinalEPG.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00399
-STREAM.VisualizeTrajectories.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00400
-STREAM.DetectMarkerGenes.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00401
-STREAM.DetectLeafGenes.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00402
-STREAM.DetectTransiotnGenes.lsid==urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00403
+EditDataset.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00394
+STREAM.Preprocess.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00395
+STREAM.FeatureSelection.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00396
+STREAM.DimensionReduction.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00397
+STREAM.SeedEPGStructure.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00398
+STREAM.ElasticPrincipalGraph.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00399
+STREAM.AdjustFinalEPG.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00400
+STREAM.VisualizeTrajectories.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00401
+STREAM.DetectMarkerGenes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00402
+STREAM.DetectLeafGenes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00403
+STREAM.DetectTransiotnGenes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00404
 
 
 
