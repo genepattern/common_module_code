@@ -439,7 +439,7 @@ STREAM.DetectDifferentiallyExpressedGenes.lsid=urn:lsid:broad.mit.edu:cancer.sof
 STREAM.DetectLeafGenes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00403
 STREAM.DetectTransitionGenes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00404
 CellFie.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00405
-
+STREAM.Plot2DVisualization.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00406
 
 
 ########################################
