@@ -440,7 +440,7 @@ STREAM.DetectLeafGenes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.m
 STREAM.DetectTransitionGenes.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00404
 CellFie.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00405
 STREAM.Plot2DVisualization.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00406
-
+STREAM.DetectLabelSpecificMarkers.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00407
 
 ########################################
 # STAR aligner modules
