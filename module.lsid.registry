@@ -445,6 +445,8 @@ SeuratClustering.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.
 Conos.Preprocess.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00409
 Conos.Cluster.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00410
 OpenCRAVAT.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00411
+HTSeq.Count.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00412
+
 
 ########################################
 # STAR aligner modules
@@ -564,5 +566,5 @@ TestFileGroup.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.tes
 TestPassByReference.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.test.analysis:00010
 
 # GPBROAD dev modules
-HTSeq.Count.lsid=urn:lsid:8080.gpbroad.broadinstitute.org:genepatternmodules:498
+#HTSeq.Count.lsid=urn:lsid:8080.gpbroad.broadinstitute.org:genepatternmodules:498 - deprecated, now dockerized
 DESeq2.Demo.lsid=urn:lsid:8080.gpbroad.broadinstitute.org:genepatternmodules:571
