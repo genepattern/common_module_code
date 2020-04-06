@@ -446,7 +446,7 @@ Conos.Preprocess.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.
 Conos.Cluster.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00410
 OpenCRAVAT.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00411
 HTSeq.Count.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00412
-
+Monocle.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00413
 
 ########################################
 # STAR aligner modules
