@@ -36,11 +36,13 @@
         </tstamp>
         <!-- move the manifest aside so that it is not always being modified in SVN -->
         <copy file="manifest" tofile="manifest.tmp" preservelastmodified="true" overwrite="true" />
-        <!-- NOTE: this will overwrite any LSID= already in the manifest file -->
-        <propertyfile file="manifest">
+
             <echo> ${quality.level} from commontargets </echo>
             <echo> ${LSID} from commontargets </echo>
             <echo> ${publish.time} from commontargets </echo>
+
+        <!-- NOTE: this will overwrite any LSID= already in the manifest file -->
+        <propertyfile file="manifest">
             <entry key="quality" value="${quality.level}" />
             <entry key="LSID" value="${LSID}" />
             <entry key="publicationDate" value="${publish.time}" />
