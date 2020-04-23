@@ -57,6 +57,7 @@
             <isset property="version" />
         </condition>
         <echo>${LSID.key} = ${LSID}</echo>
+        <echo>${quality.level} from commontargets.xml </echo>
     </target>
 
     <target name="resetManifest">
