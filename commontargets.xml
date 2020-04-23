@@ -37,10 +37,6 @@
         <!-- move the manifest aside so that it is not always being modified in SVN -->
         <copy file="manifest" tofile="manifest.tmp" preservelastmodified="true" overwrite="true" />
 
-            <echo> ${quality.level} from commontargets </echo>
-            <echo> ${LSID} from commontargets </echo>
-            <echo> ${publish.time} from commontargets </echo>
-
         <!-- NOTE: this will overwrite any LSID= already in the manifest file -->
         <propertyfile file="manifest">
             <entry key="quality" value="${quality.level}" />
@@ -57,7 +53,6 @@
             <isset property="version" />
         </condition>
         <echo>${LSID.key} = ${LSID}</echo>
-        <echo>${quality.level} from commontargets.xml </echo>
     </target>
 
     <target name="resetManifest">
