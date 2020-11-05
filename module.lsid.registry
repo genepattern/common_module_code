@@ -442,6 +442,7 @@ CellFie.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:
 STREAM.Plot2DVisualization.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00406
 STREAM.DetectLabelSpecificMarkers.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00407
 SeuratClustering.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00408
+Seurat.Clustering.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00408
 Conos.Preprocess.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00409
 Conos.Cluster.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00410
 OpenCRAVAT.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00411
