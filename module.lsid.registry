@@ -448,6 +448,10 @@ Conos.Cluster.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.ana
 OpenCRAVAT.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00411
 HTSeq.Count.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00412
 Monocle.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00413
+#
+# As of Sept 24,2020 our default authority and namespace is genepattern.org:module.analysis
+#
+Seurat.BatchCorrection.lsid=urn:lsid:genepattern.org:module.analysis:00414
 
 ########################################
 # STAR aligner modules
