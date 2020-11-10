@@ -452,6 +452,7 @@ Monocle.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:
 # As of Sept 24,2020 our default authority and namespace is genepattern.org:module.analysis
 #
 Seurat.BatchCorrection.lsid=urn:lsid:genepattern.org:module.analysis:00414
+Seurat.Preprocessing.lsid=urn:lsid:genepattern.org:module.analysis:00415
 
 ########################################
 # STAR aligner modules
