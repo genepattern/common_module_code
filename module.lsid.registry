@@ -454,6 +454,7 @@ Monocle.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:
 Seurat.BatchCorrection.lsid=urn:lsid:genepattern.org:module.analysis:00414
 Seurat.Preprocessing.lsid=urn:lsid:genepattern.org:module.analysis:00415
 Seurat.QC.lsid=urn:lsid:genepattern.org:module.analysis:00416
+TCGA.SampleSelection.lsid=urn:lsid:genepattern.org:module.analysis:00417
 
 ########################################
 # STAR aligner modules
