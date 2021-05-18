@@ -5,17 +5,22 @@
 # Key names must exactly match the ant project names for the modules as they
 # will be looked up using the key ${ant.project.name}.lsid
 #
-# the authority for all should be
-#		broad.mit.edu
+#
+# As of Sept 24,2020 our default authority and namespace is 
+#   genepattern.org
 #
 # The namespace for all LSIDs should be one of
-#		cancer.software.genepattern.module.analysis
-#		cancer.software.genepattern.module.visualizer
-#		cancer.software.genepattern.module.pipeline
+#		module.analysis
+#		module.viewer
+#		module.pipeline
 #
 # Version numbers for each module are kept in a file called release.version
 # in the directory of each module
 #
+# To add an official GP LSID for your new module, 
+# add it to the end of the List of modules and visualizers (near line 460)
+# incrementing the id by 1
+# if you are collaborator, fork this repository, add the line and submit a pull request
 
 
 #
