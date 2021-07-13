@@ -461,6 +461,9 @@ Seurat.BatchCorrection.lsid=urn:lsid:genepattern.org:module.analysis:00414
 Seurat.Preprocessing.lsid=urn:lsid:genepattern.org:module.analysis:00415
 Seurat.QC.lsid=urn:lsid:genepattern.org:module.analysis:00416
 TCGA.SampleSelection.lsid=urn:lsid:genepattern.org:module.analysis:00417
+Salmon.Alevin.Quant.lsid=urn:lsid:genepattern.org:module.analysis:00418
+Salmon.Indexer.lsid=urn:lsid:genepattern.org:module.analysis:00419
+Salmon.Quant.lsid=urn:lsid:genepattern.org:module.analysis:00420
 
 ########################################
 # STAR aligner modules
