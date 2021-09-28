@@ -465,6 +465,7 @@ Salmon.Alevin.Quant.lsid=urn:lsid:genepattern.org:module.analysis:00418
 Salmon.Indexer.lsid=urn:lsid:genepattern.org:module.analysis:00419
 Salmon.Quant.lsid=urn:lsid:genepattern.org:module.analysis:00420
 Seurat.VisualizeMarkerExpression.lsid=urn:lsid:genepattern.org:module.analysis:00421
+tximport.DESeq2.Normalize.lsid=urn:lsid:genepattern.org:module.analysis:00422
 
 ########################################
 # STAR aligner modules
