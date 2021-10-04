@@ -67,6 +67,8 @@ GEOImporter.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analy
 HierarchicalClustering.MeV.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00043
 ComparativeMarkerSelection.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00044
 ComparativeMarkerSelectionViewer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.visualizer:00045
+DifferentialExpressionViewer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.visualizer:00045
+
 ExtractComparativeMarkerResults.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00046
 mzXMLViewer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.visualizer:00047
 ProteomicsAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00048
