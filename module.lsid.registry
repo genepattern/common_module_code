@@ -5,17 +5,22 @@
 # Key names must exactly match the ant project names for the modules as they
 # will be looked up using the key ${ant.project.name}.lsid
 #
-# the authority for all should be
-#		broad.mit.edu
+#
+# As of Sept 24,2020 our default authority and namespace is 
+#   genepattern.org
 #
 # The namespace for all LSIDs should be one of
-#		cancer.software.genepattern.module.analysis
-#		cancer.software.genepattern.module.visualizer
-#		cancer.software.genepattern.module.pipeline
+#		module.analysis
+#		module.viewer
+#		module.pipeline
 #
 # Version numbers for each module are kept in a file called release.version
 # in the directory of each module
 #
+# To add an official GP LSID for your new module, 
+# add it to the end of the List of modules and visualizers (near line 460)
+# incrementing the id by 1
+# if you are collaborator, fork this repository, add the line and submit a pull request
 
 
 #
@@ -401,16 +406,15 @@ igv.js.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:0
 MAGeCK.Count.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00364
 MAGeCK.Test.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00365
 MAGeCK.Pathway.Analysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00366
-Hisat2Aligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00367
 HISAT2.aligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00367
-Hisat2Indexer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00368
 HISAT2.indexer.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00368
 TCGAImporter.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00369
 STAR.aligner.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00370
 STAR.indexer=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00371
 txt2odf.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00372
 MinfiPreprocessing.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00373
-ABasicModule.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00374
+#ABasicModule.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00374
+ExampleModule.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00374
 ConumeeCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00375
 CoGAPS.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00376
 SingleCellToolkit.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00377
@@ -446,6 +450,7 @@ CellFie.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:
 STREAM.Plot2DVisualization.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00406
 STREAM.DetectLabelSpecificMarkers.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00407
 SeuratClustering.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00408
+Seurat.Clustering.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00408
 Conos.Preprocess.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00409
 Conos.Cluster.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00410
 OpenCRAVAT.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00411
@@ -454,7 +459,15 @@ Monocle.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:
 #
 # As of Sept 24,2020 our default authority and namespace is genepattern.org:module.analysis
 #
-
+Seurat.BatchCorrection.lsid=urn:lsid:genepattern.org:module.analysis:00414
+Seurat.Preprocessing.lsid=urn:lsid:genepattern.org:module.analysis:00415
+Seurat.QC.lsid=urn:lsid:genepattern.org:module.analysis:00416
+TCGA.SampleSelection.lsid=urn:lsid:genepattern.org:module.analysis:00417
+Salmon.Alevin.Quant.lsid=urn:lsid:genepattern.org:module.analysis:00418
+Salmon.Indexer.lsid=urn:lsid:genepattern.org:module.analysis:00419
+Salmon.Quant.lsid=urn:lsid:genepattern.org:module.analysis:00420
+Seurat.VisualizeMarkerExpression.lsid=urn:lsid:genepattern.org:module.analysis:00421
+tximport.DESeq2.Normalize.lsid=urn:lsid:genepattern.org:module.analysis:00422
 
 ########################################
 # STAR aligner modules
