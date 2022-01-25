@@ -469,6 +469,7 @@ Salmon.Quant.lsid=urn:lsid:genepattern.org:module.analysis:00420
 Seurat.VisualizeMarkerExpression.lsid=urn:lsid:genepattern.org:module.analysis:00421
 tximport.DESeq2.lsid=urn:lsid:genepattern.org:module.analysis:00422
 Conos.VisualizeGeneExpression.lsid=urn:lsid:genepattern.org:module.analysis:00423
+PreprocessVelocityTranscriptome.lsid=urn:lsid:genepattern.org:module.analysis:00424
 
 ########################################
 # STAR aligner modules
