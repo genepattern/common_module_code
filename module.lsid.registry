@@ -458,6 +458,8 @@ HTSeq.Count.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analy
 Monocle.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00413
 ssGSEA.ROC.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00414
 tximport.DESeq2.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00415
+txt2odf.20211130.colparams.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00416
+
 #
 # As of Sept 24,2020 our default authority and namespace is genepattern.org:module.analysis
 #
