@@ -478,7 +478,7 @@ Conos.VisualizeGeneExpression.lsid=urn:lsid:genepattern.org:module.analysis:0042
 PreprocessVelocityTranscriptome.lsid=urn:lsid:genepattern.org:module.analysis:00424
 scVelo.lsid=urn:lsid:genepattern.org:module.analysis:00425
 Convert.Alevin.lsid=urn:lsid:genepattern.org:module.analysis:00426
-Amplicon.Architect.lsid=urn:lsid:genepattern.org:module.analysis:00427
+AmpliconSuite.lsid=urn:lsid:genepattern.org:module.analysis:00427
 ScanpyQC.lsid=urn:lsid:genepattern.org:module.analysis:00428
 
 ########################################
