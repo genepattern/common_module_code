@@ -480,7 +480,7 @@ scVelo.lsid=urn:lsid:genepattern.org:module.analysis:00425
 Convert.Alevin.lsid=urn:lsid:genepattern.org:module.analysis:00426
 AmpliconSuite.lsid=urn:lsid:genepattern.org:module.analysis:00427
 ScanpyQC.lsid=urn:lsid:genepattern.org:module.analysis:00428
-
+AmpliconSuiteAggregator.lsid=urn:lsid:genepattern.org:module.analysis:00429
 ########################################
 # STAR aligner modules
 ########################################
