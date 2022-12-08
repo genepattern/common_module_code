@@ -483,10 +483,6 @@ AmpliconSuite.lsid=urn:lsid:genepattern.org:module.analysis:00427
 ScanpyQC.lsid=urn:lsid:genepattern.org:module.analysis:00428
 AmpliconSuiteAggregator.lsid=urn:lsid:genepattern.org:module.analysis:00429
 ComBat_Seq.lsid=urn:lsid:genepattern.org:module.analysis:00430
-########################################
-# STAR aligner modules
-########################################
-STAR.aligner.lsid=urn:lsid:org.genepattern:module.star:00010
 
 ################################
 # PathSeq Pipeline
