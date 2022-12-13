@@ -483,6 +483,8 @@ AmpliconSuite.lsid=urn:lsid:genepattern.org:module.analysis:00427
 ScanpyQC.lsid=urn:lsid:genepattern.org:module.analysis:00428
 AmpliconSuiteAggregator.lsid=urn:lsid:genepattern.org:module.analysis:00429
 ComBat_Seq.lsid=urn:lsid:genepattern.org:module.analysis:00430
+OutSplice.lsid=urn:lsid:genepattern.org:module.analysis:00431
+
 
 ################################
 # PathSeq Pipeline
