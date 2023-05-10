@@ -487,7 +487,7 @@ OutSplice.lsid=urn:lsid:genepattern.org:module.analysis:00431
 OutSplice.plotJunctions.lsid=urn:lsid:genepattern.org:module.analysis:00433
 Kallisto.Indexer.lsid=urn:lsid:genepattern.org:module.analysis:00434
 Harmony.lsid=urn:lsid:genepattern.org:module.analysis:00435
-RandomForestClassifier.lsid=urn:lsid:genepattern.org:module.analysis:00436
+RandomForest.lsid=urn:lsid:genepattern.org:module.analysis:00436
 
 ################################
 # PathSeq Pipeline
