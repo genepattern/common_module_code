@@ -492,6 +492,8 @@ scGSEA.lsid=urn:lsid:genepattern.org:module.analysis:00437
 GSEA2.lsid=urn:lsid:genepattern.org:module.analysis:00438
 ssGSEA2.lsid=urn:lsid:genepattern.org:module.analysis:00439
 GSEAPreranked2.lsid=urn:lsid:genepattern.org:module.analysis:00440
+tfsites.defineTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00441
+tfsites.annotateTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
 
 
 ################################
