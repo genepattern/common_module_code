@@ -499,7 +499,7 @@ tfsites.AnnotateTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
 tfsites.InSilicoSnvAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00443
 tfsites.LoadGenome.lsid=urn:lsid:genepattern.org:module.analysis:00444
 tfsites.AnalyzePhenotypicGenotypes.lsid=urn:lsid:genepattern.org:module.analysis:00445
-tfsites.tfsites.IntegrateGenomeAnnotations=urn:lsid:genepattern.org:module.analysis:00446
+tfsites.IntegrateGenomeAnnotations=urn:lsid:genepattern.org:module.analysis:00446
 
 ################################
 # PathSeq Pipeline
