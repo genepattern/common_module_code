@@ -500,6 +500,17 @@ tfsites.InSilicoSnvAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00443
 tfsites.LoadGenome.lsid=urn:lsid:genepattern.org:module.analysis:00444
 tfsites.AnalyzePhenotypicGenotypes.lsid=urn:lsid:genepattern.org:module.analysis:00445
 tfsites.IntegrateGenomeAnnotations.lsid=urn:lsid:genepattern.org:module.analysis:00446
+tfsites.AffinityScan.lsid=urn:lsid:genepattern.org:module.analysis:00447
+tfsites.CompareSeqs.lsid=urn:lsid:genepattern.org:module.analysis:00448
+tfsites.VisualizeTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00449
+tfsites.VisualizeInSilicoSnvs.lsid=urn:lsid:genepattern.org:module.analysis:00450
+tfsites.VisualizeGenotypeSnvEffects.lsid=urn:lsid:genepattern.org:module.analysis:00451
+tfsites.AnnotateAndVisualizeTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00452
+tfsites.AnnotateAndVisualizeInSilicoSnvs.lsid=urn:lsid:genepattern.org:module.analysis:00453
+tfsites.AnalyzeGwas.lsid=urn:lsid:genepattern.org:module.analysis:00454
+tfsites.AnalyzeEqtl.lsid=urn:lsid:genepattern.org:module.analysis:00455
+tfsites.DifferentialBindingAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00456
+
 
 ################################
 # PathSeq Pipeline
