@@ -492,8 +492,7 @@ scGSEA.lsid=urn:lsid:genepattern.org:module.analysis:00437
 GSEA2.lsid=urn:lsid:genepattern.org:module.analysis:00438
 ssGSEA2.lsid=urn:lsid:genepattern.org:module.analysis:00439
 GSEAPreranked2.lsid=urn:lsid:genepattern.org:module.analysis:00440
-tfsites.DefineTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00441
-tfsites.defineTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00441
+tfsites.DefineTFBindingSites.from.PBM.lsid=urn:lsid:genepattern.org:module.analysis:00441
 tfsites.annotateTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
 tfsites.AnnotateTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
 tfsites.InSilicoSnvAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00443
@@ -512,6 +511,10 @@ tfsites.AnalyzeEQTLs.lsid=urn:lsid:genepattern.org:module.analysis:00455
 tfsites.DifferentialBindingAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00456
 RandomForest.GPU.lsid=urn:lsid:genepattern.org:module.analysis:00457
 Seurat.InteractiveUMAPVisualizer.lsid=urn:lsid:genepattern.org:module.analysis:00458
+
+TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
+
+
 ################################
 # PathSeq Pipeline
 BlastXml.lsid=urn:lsid:pathseq.broadinstitute.org:pathseq.analysis:02001
