@@ -508,7 +508,8 @@ tfsites.AnnotateAndVisualizeTfSites.lsid=urn:lsid:genepattern.org:module.analysi
 tfsites.AnnotateAndVisualizeInSilicoSnvs.lsid=urn:lsid:genepattern.org:module.analysis:00453
 tfsites.AnalyzeGenomeMPRA.lsid=urn:lsid:genepattern.org:module.analysis:00454
 tfsites.AnalyzeEQTLs.lsid=urn:lsid:genepattern.org:module.analysis:00455
-tfsites.DifferentialBindingAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00456
+tfsites.AnalyzeDifferentialBinding.lsid=urn:lsid:genepattern.org:module.analysis:00456
+
 RandomForest.GPU.lsid=urn:lsid:genepattern.org:module.analysis:00457
 Seurat.InteractiveUMAPVisualizer.lsid=urn:lsid:genepattern.org:module.analysis:00458
 tfsites.DefineTFBindingSites.from.PFM.lsid=urn:lsid:genepattern.org:module.analysis:00459
