@@ -494,6 +494,7 @@ ssGSEA2.lsid=urn:lsid:genepattern.org:module.analysis:00439
 GSEAPreranked2.lsid=urn:lsid:genepattern.org:module.analysis:00440
 tfsites.DefineTFBindingSites.from.PBM.lsid=urn:lsid:genepattern.org:module.analysis:00441
 tfsites.annotateAndVisualizeTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
+tfsites.AnnotateAndVisualizeTFSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
 tfsites.AnnotateTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
 tfsites.AnnotateAndVisualizeInSilicoSNVAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00443
 tfsites.LoadGenome.lsid=urn:lsid:genepattern.org:module.analysis:00444
