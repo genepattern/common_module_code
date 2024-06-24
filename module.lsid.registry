@@ -515,6 +515,8 @@ RandomForest.GPU.lsid=urn:lsid:genepattern.org:module.analysis:00457
 Seurat.InteractiveUMAPVisualizer.lsid=urn:lsid:genepattern.org:module.analysis:00458
 tfsites.DefineTFBindingSites.from.PFM.lsid=urn:lsid:genepattern.org:module.analysis:00459
 
+spatialGE.Preprocessing.lsid=urn:lsid:genepattern.org:module.analysis:00460
+
 
 TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
 
