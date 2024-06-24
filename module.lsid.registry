@@ -516,6 +516,7 @@ Seurat.InteractiveUMAPVisualizer.lsid=urn:lsid:genepattern.org:module.analysis:0
 tfsites.DefineTFBindingSites.from.PFM.lsid=urn:lsid:genepattern.org:module.analysis:00459
 
 spatialGE.Preprocessing.lsid=urn:lsid:genepattern.org:module.analysis:00460
+spatialGE.STEnrich.lsid=urn:lsid:genepattern.org:module.analysis:00461
 
 
 TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
