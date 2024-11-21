@@ -518,6 +518,7 @@ spatialGE.STenrich.lsid=urn:lsid:genepattern.org:module.analysis:00461
 spatialGE.STclust.lsid=urn:lsid:genepattern.org:module.analysis:00462
 Tangram.lsid=urn:lsid:genepattern.org:module.analysis:00463
 Tangram.GPU.lsid=urn:lsid:genepattern.org:module.analysis:00464
+spatialGE.STgradient.lsid=urn:lsid:genepattern.org:module.analysis:00465
 
 
 
