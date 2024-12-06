@@ -523,6 +523,7 @@ Tangram.lsid=urn:lsid:genepattern.org:module.analysis:00463
 Tangram.GPU.lsid=urn:lsid:genepattern.org:module.analysis:00464
 spatialGE.STgradient.lsid=urn:lsid:genepattern.org:module.analysis:00465
 spatialGE.SpatialAutocorrelation.lsid=urn:lsid:genepattern.org:module.analysis:00466
+LOHHLA.lsid=urn:lsid:genepattern.org:module.analysis:00467
 
 
 TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
