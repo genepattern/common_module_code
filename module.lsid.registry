@@ -494,28 +494,14 @@ ssGSEA2.lsid=urn:lsid:genepattern.org:module.analysis:00439
 GSEAPreranked2.lsid=urn:lsid:genepattern.org:module.analysis:00440
 tfsites.DefineTFBindingSites.from.PBM.lsid=urn:lsid:genepattern.org:module.analysis:00441
 # renamed
-tfsites.NormalizeTfDnaAffinityData.lsid=urn:lsid:genepattern.org:module.analysis:00441
-
-tfsites.annotateAndVisualizeTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
-tfsites.AnnotateAndVisualizeTFSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
-tfsites.AnnotateTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00442
-tfsites.AnnotateAndVisualizeInSilicoSNVAnalysis.lsid=urn:lsid:genepattern.org:module.analysis:00443
-tfsites.LoadGenome.lsid=urn:lsid:genepattern.org:module.analysis:00444
-tfsites.AnalyzePhenotypicGenotypes.lsid=urn:lsid:genepattern.org:module.analysis:00445
-tfsites.IntegrateGenomeAnnotations.lsid=urn:lsid:genepattern.org:module.analysis:00446
-tfsites.AffinityScan.lsid=urn:lsid:genepattern.org:module.analysis:00447
+tfsites.NormalizeTfDNAAffinityData.lsid=urn:lsid:genepattern.org:module.analysis:00441
+tfsites.GenerateMotifDatabase.lsid=urn:lsid:genepattern.org:module.analysis:00459
+tfsites.VisualizeTFSitesOnSequences.lsid=urn:lsid:genepattern.org:module.analysis:00442
+tfsites.FindTfSitesAlteredBySequenceVariation.lsid=urn:lsid:genepattern.org:module.analysis:00443
 tfsites.CompareEnhancers.lsid=urn:lsid:genepattern.org:module.analysis:00448
-tfsites.VisualizeTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00449
-tfsites.VisualizePhenotypicGenotypes.lsid=urn:lsid:genepattern.org:module.analysis:00450
-tfsites.VisualizeGenotypeSnvEffects.lsid=urn:lsid:genepattern.org:module.analysis:00451
-tfsites.AnnotateAndVisualizeTfSites.lsid=urn:lsid:genepattern.org:module.analysis:00452
-tfsites.AnnotateAndVisualizeInSilicoSnvs.lsid=urn:lsid:genepattern.org:module.analysis:00453
-tfsites.AnalyzeGenomeMPRA.lsid=urn:lsid:genepattern.org:module.analysis:00454
-tfsites.AnalyzeEQTLs.lsid=urn:lsid:genepattern.org:module.analysis:00455
-tfsites.AnalyzeDifferentialBinding.lsid=urn:lsid:genepattern.org:module.analysis:00456
+# 444,445,446,447, 449, 450 were released when those tfsites modules were cancelled
 RandomForest.GPU.lsid=urn:lsid:genepattern.org:module.analysis:00457
 Seurat.InteractiveUMAPVisualizer.lsid=urn:lsid:genepattern.org:module.analysis:00458
-tfsites.DefineTFBindingSites.from.PFM.lsid=urn:lsid:genepattern.org:module.analysis:00459
 spatialGE.Preprocessing.lsid=urn:lsid:genepattern.org:module.analysis:00460
 spatialGE.STenrich.lsid=urn:lsid:genepattern.org:module.analysis:00461
 spatialGE.STclust.lsid=urn:lsid:genepattern.org:module.analysis:00462
