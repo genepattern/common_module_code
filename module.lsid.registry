@@ -512,6 +512,7 @@ spatialGE.SpatialAutocorrelation.lsid=urn:lsid:genepattern.org:module.analysis:0
 LOHHLA.lsid=urn:lsid:genepattern.org:module.analysis:00467
 spatialGE.STgradient.Launcher.lsid=urn:lsid:genepattern.org:module.analysis:00468
 spatialGE.STplot.lsid=urn:lsid:genepattern.org:module.analysis:00469
+tfsites.MapTfDNAInteractions.lsid=urn:lsid:genepattern.org:module.analysis:00470
 
 
 TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
