@@ -517,6 +517,7 @@ spatialGE.STplot.Launcher.lsid=urn:lsid:genepattern.org:module.analysis:00471
 CorrelationMatrix.lsid=urn:lsid:genepattern.org:module.analysis:00472
 spatialGE.STdiff.lsid=urn:lsid:genepattern.org:module.analysis:00473
 CorrelationMatrix.lsid=urn:lsid:genepattern.org:module.analysis:00474
+h5adtoGCT.lsid=urn:lsid:genepattern.org:module.analysis:00475
 
 TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
 
