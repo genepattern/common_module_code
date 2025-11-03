@@ -523,6 +523,7 @@ tfsites.CompareAcrossSeqsFromDNA.lsid=urn:lsid:genepattern.org:module.analysis:0
 eREVEALER_preprocess.lsid=urn:lsid:genepattern.org:module.analysis:00477
 eREVEALER.lsid=urn:lsid:genepattern.org:module.analysis:00478
 tfsites.CompareAcrossSeqsFromGenomicVariants.lsid=urn:lsid:genepattern.org:module.analysis:00479
+tfsites.PerturbTfSiteWithoutSideEffects.lsid=urn:lsid:genepattern.org:module.analysis:00480
 TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
 
 
