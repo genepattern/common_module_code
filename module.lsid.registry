@@ -528,7 +528,7 @@ gatk.Mutect2.lsid=urn:lsid:genepattern.org:module.analysis:00481
 gatk.GetPileupSummaries.lsid=urn:lsid:genepattern.org:module.analysis:00482
 CellTypist.lsid=urn:lsid:genepattern.org:module.analysis:00483
 Piscem.lsid=urn:lsid:genepattern.org:module.analysis:00484
-
+gatk.CalculateContamination.lsid=urn:lsid:genepattern.org:module.analysis:00485
 
 TestModule2.lsid=urn:lsid:testing.genepattern.org:test.module.analysis:00999
 
